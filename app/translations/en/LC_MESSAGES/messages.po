@@ -1,0 +1,1027 @@
+# English translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-07-01 22:14+0100\n"
+"PO-Revision-Date: 2026-07-01 22:15+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app/routes/assistant.py:13
+msgid ""
+"You are a helpful assistant inside CCI SurveyHUB, an internal survey "
+"management application for the Chamber of Commerce and Industry.\n"
+"\n"
+"You help CCI staff navigate and use the application. You only answer "
+"questions about how to use CCI SurveyHUB. If asked anything unrelated, "
+"politely redirect to app-related questions.\n"
+"\n"
+"The application has these main sections:\n"
+"- Dashboard: shows total surveys, responses, anomalies and latest "
+"activity\n"
+"- Surveys: create and manage surveys, add blocks and questions, preview "
+"and publish\n"
+"- Anomalies: review data quality issues detected on form submission, mark"
+" them as resolved\n"
+"- Exports: download response data as CSV or Excel for Power BI reporting\n"
+"\n"
+"Common tasks you can help with:\n"
+"- How to create a new survey: Click \"Surveys\" → \"Create Survey\" → "
+"fill settings → add blocks and questions → publish\n"
+"- How to add blocks and questions: In survey builder, click \"Add Block\""
+" then \"Add Question\" under each block\n"
+"- How to publish a survey: In survey builder, click \"Publish\" button → "
+"copy public link\n"
+"- How to set a password on a public form: In survey settings, fill "
+"\"Response Password\" field → save\n"
+"- How to preview a survey: Click \"Preview\" button in survey builder\n"
+"- How to view results and charts: From surveys list, click the chart icon"
+" → see charts and export options\n"
+"- How to mark an anomaly as resolved: Go to Anomalies → click \"Resolve\""
+" on any open anomaly\n"
+"- How to export data: From results page, click \"Export CSV\" or \"Export"
+" Excel\" buttons\n"
+"\n"
+"Keep responses concise and actionable. Use bullet points for steps."
+msgstr ""
+
+#: app/routes/assistant.py:42
+msgid "Message is required"
+msgstr ""
+
+#: app/routes/assistant.py:47
+msgid "API key not configured"
+msgstr ""
+
+#: app/routes/assistant.py:59
+#, python-format
+msgid "Assistant error: %(error)s"
+msgstr ""
+
+#: app/routes/auth.py:19
+#, python-format
+msgid "Welcome back, %(name)s!"
+msgstr ""
+
+#: app/routes/auth.py:23
+msgid "Invalid email or password."
+msgstr ""
+
+#: app/routes/auth.py:37
+msgid "All fields are required."
+msgstr ""
+
+#: app/routes/auth.py:41
+msgid "Passwords do not match."
+msgstr ""
+
+#: app/routes/auth.py:45
+msgid "Password must be at least 6 characters."
+msgstr ""
+
+#: app/routes/auth.py:49
+msgid "Email already registered."
+msgstr ""
+
+#: app/routes/auth.py:57
+msgid "Account created successfully. Please log in."
+msgstr ""
+
+#: app/routes/auth.py:66
+msgid "You have been logged out."
+msgstr ""
+
+#: app/routes/dashboard.py:117
+msgid "Anomaly marked as resolved."
+msgstr ""
+
+#: app/routes/responses.py:32
+msgid "Incorrect password. Please try again."
+msgstr ""
+
+#: app/routes/responses.py:156
+msgid "Your response has been submitted successfully."
+msgstr ""
+
+#: app/routes/surveys.py:55
+msgid "Untitled Survey"
+msgstr ""
+
+#: app/routes/surveys.py:64
+msgid "Survey created. You can now build it."
+msgstr ""
+
+#: app/routes/surveys.py:86
+msgid "Survey settings saved."
+msgstr ""
+
+#: app/routes/surveys.py:96
+msgid "Block title is required."
+msgstr ""
+
+#: app/routes/surveys.py:107
+msgid "Block added."
+msgstr ""
+
+#: app/routes/surveys.py:117
+msgid "Question text is required."
+msgstr ""
+
+#: app/routes/surveys.py:130
+msgid "Question added."
+msgstr ""
+
+#: app/routes/surveys.py:140
+msgid "Choice text is required."
+msgstr ""
+
+#: app/routes/surveys.py:151
+msgid "Choice added."
+msgstr ""
+
+#: app/routes/surveys.py:162
+msgid "Cannot delete survey with existing responses."
+msgstr ""
+
+#: app/routes/surveys.py:167
+msgid "Survey deleted successfully."
+msgstr ""
+
+#: app/routes/surveys.py:184
+msgid "Survey is already published."
+msgstr ""
+
+#: app/routes/surveys.py:192
+#, python-format
+msgid "Survey published successfully! Public link: %(url)s"
+msgstr ""
+
+#: app/templates/anomalies.html:13
+msgid "Data Anomalies"
+msgstr ""
+
+#: app/templates/anomalies.html:14
+msgid "Review and resolve data quality issues from survey submissions."
+msgstr ""
+
+#: app/templates/anomalies.html:18
+msgid "Total"
+msgstr ""
+
+#: app/templates/anomalies.html:25
+msgid "Status:"
+msgstr ""
+
+#: app/templates/anomalies.html:28 app/templates/anomalies.html:46
+#: app/templates/surveys.html:41
+msgid "All"
+msgstr ""
+
+#: app/templates/anomalies.html:32 app/templates/anomalies.html:106
+msgid "Open"
+msgstr ""
+
+#: app/templates/anomalies.html:36 app/templates/anomalies.html:110
+#: app/templates/anomalies.html:127
+msgid "Resolved"
+msgstr ""
+
+#: app/templates/anomalies.html:43
+msgid "Issue:"
+msgstr ""
+
+#: app/templates/anomalies.html:63
+msgid "ID"
+msgstr ""
+
+#: app/templates/anomalies.html:64
+msgid "Company"
+msgstr ""
+
+#: app/templates/anomalies.html:65 app/utils/export_helper.py:112
+msgid "Field"
+msgstr ""
+
+#: app/templates/anomalies.html:66 app/utils/export_helper.py:113
+msgid "Issue Type"
+msgstr ""
+
+#: app/templates/anomalies.html:67 app/templates/dashboard.html:119
+#: app/templates/survey_builder.html:106 app/templates/surveys.html:58
+#: app/utils/export_helper.py:30 app/utils/export_helper.py:70
+#: app/utils/export_helper.py:114
+msgid "Status"
+msgstr ""
+
+#: app/templates/anomalies.html:68
+msgid "Created"
+msgstr ""
+
+#: app/templates/anomalies.html:69 app/templates/dashboard.html:120
+msgid "Action"
+msgstr ""
+
+#: app/templates/anomalies.html:81 app/templates/dashboard.html:131
+#: app/templates/dashboard.html:134
+msgid "Unknown"
+msgstr ""
+
+#: app/templates/anomalies.html:92
+msgid "Invalid Format"
+msgstr ""
+
+#: app/templates/anomalies.html:94
+msgid "Too Short"
+msgstr ""
+
+#: app/templates/anomalies.html:96
+msgid "Duplicate"
+msgstr ""
+
+#: app/templates/anomalies.html:98
+msgid "Missing"
+msgstr ""
+
+#: app/templates/anomalies.html:115 app/templates/dashboard.html:139
+msgid "N/A"
+msgstr ""
+
+#: app/templates/anomalies.html:120
+msgid "Resolve Anomaly"
+msgstr ""
+
+#: app/templates/anomalies.html:120
+msgid "Mark this anomaly as resolved?"
+msgstr ""
+
+#: app/templates/anomalies.html:120 app/templates/anomalies.html:122
+msgid "Resolve"
+msgstr ""
+
+#: app/templates/anomalies.html:137
+msgid "No anomalies found."
+msgstr ""
+
+#: app/templates/anomalies.html:148 app/templates/surveys.html:124
+msgid "Showing"
+msgstr ""
+
+#: app/templates/anomalies.html:149 app/templates/surveys.html:125
+msgid "to"
+msgstr ""
+
+#: app/templates/anomalies.html:150 app/templates/surveys.html:126
+msgid "of"
+msgstr ""
+
+#: app/templates/anomalies.html:150 app/templates/surveys.html:126
+msgid "entries"
+msgstr ""
+
+#: app/templates/anomalies.html:154 app/templates/anomalies.html:156
+#: app/templates/surveys.html:130 app/templates/surveys.html:132
+msgid "Previous"
+msgstr ""
+
+#: app/templates/anomalies.html:200 app/templates/anomalies.html:202
+#: app/templates/dashboard.html:221 app/templates/dashboard.html:223
+#: app/templates/surveys.html:176 app/templates/surveys.html:178
+msgid "Next"
+msgstr ""
+
+#: app/templates/base.html:85
+msgid "Switch language"
+msgstr ""
+
+#: app/templates/base.html:94
+msgid "Dashboard"
+msgstr ""
+
+#: app/templates/base.html:97
+msgid "Surveys"
+msgstr ""
+
+#: app/templates/base.html:100
+msgid "Anomalies"
+msgstr ""
+
+#: app/templates/base.html:103 app/templates/exports.html:5
+msgid "Exports"
+msgstr ""
+
+#: app/templates/base.html:112
+msgid "Admin User"
+msgstr ""
+
+#: app/templates/base.html:113
+msgid "System Overseer"
+msgstr ""
+
+#: app/templates/base.html:117
+msgid "Logout"
+msgstr ""
+
+#: app/templates/base.html:192 app/templates/base.html:211
+msgid "Confirm Action"
+msgstr ""
+
+#: app/templates/base.html:193
+msgid "Are you sure?"
+msgstr ""
+
+#: app/templates/base.html:195 app/templates/base.html:219
+msgid "Confirm"
+msgstr ""
+
+#: app/templates/base.html:215
+msgid "Are you sure you want to proceed?"
+msgstr ""
+
+#: app/templates/base.html:218
+msgid "Cancel"
+msgstr ""
+
+#: app/templates/base.html:399 app/templates/base.html:405
+msgid "AI Assistant"
+msgstr ""
+
+#: app/templates/base.html:412
+msgid "Hello! I'm your CCI SurveyHUB assistant. How can I help you today?"
+msgstr ""
+
+#: app/templates/base.html:416
+msgid "Ask me anything about SurveyHUB..."
+msgstr ""
+
+#: app/templates/base.html:417
+msgid "Send"
+msgstr ""
+
+#: app/templates/base.html:451
+msgid "Thinking..."
+msgstr ""
+
+#: app/templates/base.html:469
+msgid "Sorry, I could not process your request."
+msgstr ""
+
+#: app/templates/base.html:475
+msgid "Sorry, an error occurred. Please try again."
+msgstr ""
+
+#: app/templates/dashboard.html:43
+msgid "System Overview"
+msgstr ""
+
+#: app/templates/dashboard.html:44
+msgid "Real-time performance metrics and response tracking."
+msgstr ""
+
+#: app/templates/dashboard.html:56
+msgid "Total Surveys"
+msgstr ""
+
+#: app/templates/dashboard.html:66
+msgid "Published Surveys"
+msgstr ""
+
+#: app/templates/dashboard.html:77 app/templates/results.html:54
+msgid "Total Responses"
+msgstr ""
+
+#: app/templates/dashboard.html:87
+msgid "Incomplete Records"
+msgstr ""
+
+#: app/templates/dashboard.html:97
+msgid "Potential Duplicates"
+msgstr ""
+
+#: app/templates/dashboard.html:107
+msgid "Latest Responses"
+msgstr ""
+
+#: app/templates/dashboard.html:108
+msgid "Recently submitted data from active regional surveys."
+msgstr ""
+
+#: app/templates/dashboard.html:116 app/templates/preview.html:61
+#: app/templates/public_survey.html:76 app/utils/export_helper.py:25
+#: app/utils/export_helper.py:65 app/utils/export_helper.py:111
+msgid "Company Name"
+msgstr ""
+
+#: app/templates/dashboard.html:117
+msgid "Survey"
+msgstr ""
+
+#: app/templates/dashboard.html:118 app/utils/export_helper.py:29
+#: app/utils/export_helper.py:69
+msgid "Submitted At"
+msgstr ""
+
+#: app/templates/dashboard.html:144
+msgid "FLAGGED"
+msgstr ""
+
+#: app/templates/dashboard.html:146
+msgid "COMPLETED"
+msgstr ""
+
+#: app/templates/dashboard.html:148
+msgid "IN REVIEW"
+msgstr ""
+
+#: app/templates/dashboard.html:161
+msgid "No logs found inside the system index."
+msgstr ""
+
+#: app/templates/dashboard.html:171
+#, python-format
+msgid "Showing %(start)s to %(end)s of %(total)s entries"
+msgstr ""
+
+#: app/templates/dashboard.html:175 app/templates/dashboard.html:177
+msgid "Prev"
+msgstr ""
+
+#: app/templates/dashboard.html:231
+msgid "Response Volume"
+msgstr ""
+
+#: app/templates/dashboard.html:232
+msgid "Submissions over the last 30 days."
+msgstr ""
+
+#: app/templates/dashboard.html:244
+msgid "Just now"
+msgstr ""
+
+#: app/templates/dashboard.html:245
+msgid "mins ago"
+msgstr ""
+
+#: app/templates/dashboard.html:246
+msgid "hour"
+msgstr ""
+
+#: app/templates/dashboard.html:247
+msgid "hours"
+msgstr ""
+
+#: app/templates/dashboard.html:248
+msgid "day"
+msgstr ""
+
+#: app/templates/dashboard.html:249
+msgid "days"
+msgstr ""
+
+#: app/templates/dashboard.html:250
+msgid "Submissions"
+msgstr ""
+
+#: app/templates/exports.html:10
+msgid "Anomalies Report"
+msgstr ""
+
+#: app/templates/exports.html:11
+msgid "Download a CSV report of all detected anomalies across all surveys."
+msgstr ""
+
+#: app/templates/exports.html:13
+msgid "Export Anomalies CSV"
+msgstr ""
+
+#: app/templates/form_password.html:6
+msgid "Password Required"
+msgstr ""
+
+#: app/templates/form_password.html:44
+msgid "This survey is password protected."
+msgstr ""
+
+#: app/templates/form_password.html:45
+msgid ""
+"Please enter the password provided by the survey administrator to "
+"continue."
+msgstr ""
+
+#: app/templates/form_password.html:56 app/templates/login.html:500
+msgid "Password"
+msgstr ""
+
+#: app/templates/form_password.html:57
+msgid "Enter survey password"
+msgstr ""
+
+#: app/templates/form_password.html:60
+msgid "Access Survey"
+msgstr ""
+
+#: app/templates/form_password.html:66 app/templates/public_survey.html:146
+msgid "Powered by CCI SurveyHUB — Chamber of Commerce and Industry"
+msgstr ""
+
+#: app/templates/login.html:6
+msgid "Login & Register"
+msgstr ""
+
+#: app/templates/login.html:477
+msgid "Log in to your Account"
+msgstr ""
+
+#: app/templates/login.html:478
+msgid "Welcome back! Select method to log in:"
+msgstr ""
+
+#: app/templates/login.html:491
+msgid "or continue with email"
+msgstr ""
+
+#: app/templates/login.html:496 app/templates/preview.html:69
+#: app/templates/public_survey.html:84 app/utils/export_helper.py:27
+#: app/utils/export_helper.py:67
+msgid "Email"
+msgstr ""
+
+#: app/templates/login.html:503
+msgid "Remember me"
+msgstr ""
+
+#: app/templates/login.html:504
+msgid "Forgot Password?"
+msgstr ""
+
+#: app/templates/login.html:506
+msgid "Log in"
+msgstr ""
+
+#: app/templates/login.html:508
+msgid "Don't have an account?"
+msgstr ""
+
+#: app/templates/login.html:508
+msgid "Create an account"
+msgstr ""
+
+#: app/templates/login.html:512
+msgid "Create an Account"
+msgstr ""
+
+#: app/templates/login.html:513
+msgid "Join CCI SurveyHUB to start collecting data."
+msgstr ""
+
+#: app/templates/login.html:518
+msgid "Full Name"
+msgstr ""
+
+#: app/templates/login.html:522
+msgid "Work Email"
+msgstr ""
+
+#: app/templates/login.html:526
+msgid "Create Password"
+msgstr ""
+
+#: app/templates/login.html:530
+msgid "Confirm Password"
+msgstr ""
+
+#: app/templates/login.html:532
+msgid "Register Account"
+msgstr ""
+
+#: app/templates/login.html:534
+msgid "Already have an account?"
+msgstr ""
+
+#: app/templates/login.html:534
+msgid "Back to Log in"
+msgstr ""
+
+#: app/templates/login.html:556
+msgid "Survey Creator"
+msgstr ""
+
+#: app/templates/login.html:559
+msgid "Customer Feedback Form"
+msgstr ""
+
+#: app/templates/login.html:563
+msgid "Multiple Choice Matrix"
+msgstr ""
+
+#: app/templates/login.html:567
+msgid "Contact Collection Field"
+msgstr ""
+
+#: app/templates/login.html:573
+msgid "Create."
+msgstr ""
+
+#: app/templates/login.html:574
+msgid ""
+"Build dynamic, logic-driven surveys in minutes using our intuitive drag-"
+"and-drop form builder."
+msgstr ""
+
+#: app/templates/login.html:586
+msgid "Collect. Verify."
+msgstr ""
+
+#: app/templates/login.html:587
+msgid ""
+"Deploy to the field instantly. Gather data offline and sync automatically"
+" with built-in GPS and photo verification."
+msgstr ""
+
+#: app/templates/login.html:601
+msgid "Analyse."
+msgstr ""
+
+#: app/templates/login.html:602
+msgid ""
+"Transform raw data into actionable insights instantly with customizable, "
+"real-time dashboards."
+msgstr ""
+
+#: app/templates/preview.html:36 app/templates/survey_builder.html:53
+#: app/templates/surveys.html:99
+msgid "Preview"
+msgstr ""
+
+#: app/templates/preview.html:40
+msgid "Back to Builder"
+msgstr ""
+
+#: app/templates/preview.html:56 app/templates/public_survey.html:71
+msgid "Company Information"
+msgstr ""
+
+#: app/templates/preview.html:57
+msgid "Respondents will fill in these fields before answering the survey."
+msgstr ""
+
+#: app/templates/preview.html:62
+msgid "Company name will be entered here"
+msgstr ""
+
+#: app/templates/preview.html:66 app/templates/public_survey.html:81
+msgid "14-digit SIRET number"
+msgstr ""
+
+#: app/templates/preview.html:73 app/templates/public_survey.html:88
+#: app/utils/export_helper.py:28 app/utils/export_helper.py:68
+msgid "Phone"
+msgstr ""
+
+#: app/templates/preview.html:90 app/templates/public_survey.html:105
+msgid "Q"
+msgstr ""
+
+#: app/templates/preview.html:93 app/templates/public_survey.html:108
+msgid "* Required"
+msgstr ""
+
+#: app/templates/preview.html:115 app/templates/public_survey.html:130
+msgid "This survey has no questions yet."
+msgstr ""
+
+#: app/templates/preview.html:117
+msgid "Go to Builder"
+msgstr ""
+
+#: app/templates/preview.html:126 app/templates/public_survey.html:137
+msgid "Submit Response"
+msgstr ""
+
+#: app/templates/preview.html:135
+msgid "Preview Mode"
+msgstr ""
+
+#: app/templates/preview.html:135
+msgid "Powered by CCI SurveyHUB"
+msgstr ""
+
+#: app/templates/preview.html:135
+msgid "Chamber of Commerce and Industry"
+msgstr ""
+
+#: app/templates/public_survey.html:6 app/templates/public_survey.html:37
+msgid "CCI SurveyHUB"
+msgstr ""
+
+#: app/templates/public_survey.html:72
+msgid "Please provide your company details before answering the survey."
+msgstr ""
+
+#: app/templates/public_survey.html:77
+msgid "Enter company name"
+msgstr ""
+
+#: app/templates/public_survey.html:80 app/utils/export_helper.py:26
+#: app/utils/export_helper.py:66
+msgid "SIRET"
+msgstr ""
+
+#: app/templates/public_survey.html:85
+msgid "contact@company.com"
+msgstr ""
+
+#: app/templates/public_survey.html:89
+msgid "06 12 34 56 78"
+msgstr ""
+
+#: app/templates/results.html:34
+msgid "Back to Surveys"
+msgstr ""
+
+#: app/templates/results.html:38
+msgid "Survey Results and Analytics"
+msgstr ""
+
+#: app/templates/results.html:42
+msgid "Export CSV"
+msgstr ""
+
+#: app/templates/results.html:45
+msgid "Export Excel"
+msgstr ""
+
+#: app/templates/results.html:64
+msgid "Complete Responses"
+msgstr ""
+
+#: app/templates/results.html:74
+msgid "Completion Rate"
+msgstr ""
+
+#: app/templates/results.html:94
+#, python-format
+msgid "Question %(num)s"
+msgstr ""
+
+#: app/templates/results.html:97
+msgid "Multiple Choice"
+msgstr ""
+
+#: app/templates/results.html:100 app/templates/survey_builder.html:150
+msgid "Required"
+msgstr ""
+
+#: app/templates/results.html:120
+msgid "Choice"
+msgstr ""
+
+#: app/templates/results.html:121
+msgid "Count"
+msgstr ""
+
+#: app/templates/results.html:122
+msgid "Percentage"
+msgstr ""
+
+#: app/templates/results.html:141
+msgid "No responses yet for this survey."
+msgstr ""
+
+#: app/templates/survey_builder.html:47 app/templates/surveys.html:30
+msgid "My Surveys"
+msgstr ""
+
+#: app/templates/survey_builder.html:49
+msgid "Create Survey"
+msgstr ""
+
+#: app/templates/survey_builder.html:67 app/templates/survey_builder.html:109
+#: app/templates/surveys.html:72
+msgid "Published"
+msgstr ""
+
+#: app/templates/survey_builder.html:70
+msgid "Publish Survey"
+msgstr ""
+
+#: app/templates/survey_builder.html:70
+msgid "Publish this survey? This will generate a public link."
+msgstr ""
+
+#: app/templates/survey_builder.html:70 app/templates/survey_builder.html:72
+msgid "Publish"
+msgstr ""
+
+#: app/templates/survey_builder.html:82
+msgid "Survey Settings"
+msgstr ""
+
+#: app/templates/survey_builder.html:86 app/templates/surveys.html:57
+msgid "Title"
+msgstr ""
+
+#: app/templates/survey_builder.html:91
+msgid "Description"
+msgstr ""
+
+#: app/templates/survey_builder.html:96
+msgid "Objective"
+msgstr ""
+
+#: app/templates/survey_builder.html:101
+msgid "Target Audience"
+msgstr ""
+
+#: app/templates/survey_builder.html:108 app/templates/surveys.html:74
+msgid "Draft"
+msgstr ""
+
+#: app/templates/survey_builder.html:110 app/templates/surveys.html:76
+msgid "Closed"
+msgstr ""
+
+#: app/templates/survey_builder.html:111 app/templates/surveys.html:78
+msgid "Archived"
+msgstr ""
+
+#: app/templates/survey_builder.html:116
+msgid "Response Password (optional)"
+msgstr ""
+
+#: app/templates/survey_builder.html:118
+msgid "Leave blank for no password"
+msgstr ""
+
+#: app/templates/survey_builder.html:123
+msgid "If set, respondents must enter this password to access the form"
+msgstr ""
+
+#: app/templates/survey_builder.html:127
+msgid "Save Settings"
+msgstr ""
+
+#: app/templates/survey_builder.html:140
+msgid "question"
+msgid_plural "questions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/templates/survey_builder.html:150
+msgid "Question"
+msgstr ""
+
+#: app/templates/survey_builder.html:150
+msgid "Multiple choice"
+msgstr ""
+
+#: app/templates/survey_builder.html:150
+msgid "Optional"
+msgstr ""
+
+#: app/templates/survey_builder.html:167
+msgid "Add a choice..."
+msgstr ""
+
+#: app/templates/survey_builder.html:176
+msgid "Add a question..."
+msgstr ""
+
+#: app/templates/survey_builder.html:178
+msgid "Add Question"
+msgstr ""
+
+#: app/templates/survey_builder.html:188
+msgid "New block title..."
+msgstr ""
+
+#: app/templates/survey_builder.html:191
+msgid "Add Block"
+msgstr ""
+
+#: app/templates/surveys.html:31
+msgid "Manage all surveys created for the Chamber."
+msgstr ""
+
+#: app/templates/surveys.html:34
+msgid "Create New Survey"
+msgstr ""
+
+#: app/templates/surveys.html:59 app/utils/export_helper.py:87
+#: app/utils/export_helper.py:89
+msgid "Responses"
+msgstr ""
+
+#: app/templates/surveys.html:60
+msgid "Created At"
+msgstr ""
+
+#: app/templates/surveys.html:61
+msgid "Actions"
+msgstr ""
+
+#: app/templates/surveys.html:89
+msgid "Copy Link"
+msgstr ""
+
+#: app/templates/surveys.html:93
+msgid "Results"
+msgstr ""
+
+#: app/templates/surveys.html:96
+msgid "Edit"
+msgstr ""
+
+#: app/templates/surveys.html:102
+msgid "Delete Survey"
+msgstr ""
+
+#: app/templates/surveys.html:102
+msgid "Are you sure you want to delete this survey? This action cannot be undone."
+msgstr ""
+
+#: app/templates/surveys.html:102
+msgid "Delete"
+msgstr ""
+
+#: app/templates/surveys.html:113
+msgid "No surveys found."
+msgstr ""
+
+#: app/templates/surveys.html:190
+msgid "Copied!"
+msgstr ""
+
+#: app/templates/thank_you.html:20
+msgid "Thank You!"
+msgstr ""
+
+#: app/templates/thank_you.html:21
+#, python-format
+msgid "Your response to %(title)s has been received successfully."
+msgstr ""
+
+#: app/templates/thank_you.html:23
+msgid "Submit Another Response"
+msgstr ""
+
+#: app/templates/components/_spinner.html:11
+msgid "Processing Nexus"
+msgstr ""
+
+#: app/templates/components/_spinner.html:12
+msgid "Structuring survey data..."
+msgstr ""
+
+#: app/utils/export_helper.py:115
+msgid "Detected At"
+msgstr ""
+
+#: app/utils/export_helper.py:116
+msgid "Resolved At"
+msgstr ""
+
+#: app/utils/export_helper.py:117
+msgid "Resolved By"
+msgstr ""
+
+#: app/utils/export_helper.py:126
+msgid "anomalies_report.csv"
+msgstr ""
+
+#: app/utils/validation.py:12
+msgid "Invalid email format"
+msgstr ""
+
+#: app/utils/validation.py:18 app/utils/validation.py:42
+msgid "SIRET is required"
+msgstr ""
+
+#: app/utils/validation.py:20
+msgid "SIRET must contain only digits"
+msgstr ""
+
+#: app/utils/validation.py:22
+#, python-format
+msgid "SIRET must be exactly 14 digits (got %(num)d)"
+msgstr ""
+
+#: app/utils/validation.py:32
+#, python-format
+msgid "Phone must be 10 digits (got %(num)d)"
+msgstr ""
+
+#: app/utils/validation.py:40
+msgid "Company name is required"
+msgstr ""
+

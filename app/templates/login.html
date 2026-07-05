@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCI SurveyHUB - {{ _('Login & Register') }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --primary-hover: #1d4ed8;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --bg-light: #f9fafb;
+            --bg-right: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        /* --- Left Panel: Forms --- */
+        .login-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            max-width: 50%;
+            position: relative;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2.5rem;
+            width: 100%;
+        }
+
+        .logo-icon {
+            color: var(--primary-blue);
+            font-size: 28px;
+        }
+
+        .forms-container {
+            width: 100%;
+            position: relative;
+            height: 500px; /* Enhanced height allowance */
+        }
+
+        /* Form Toggle Logic */
+        .form-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-30px);
+            transition: all 0.4s ease-in-out;
+        }
+
+        .form-view.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Social Buttons */
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: #fff;
+            color: var(--text-main);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .social-btn:hover { background: var(--bg-light); }
+        .social-btn img { width: 18px; height: 18px; object-fit: contain; }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        /* Inputs */
+        .form-group {
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus { border-color: var(--primary-blue); }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 1.5rem;
+        }
+
+        .forgot-link { color: var(--primary-blue); text-decoration: none; font-weight: 500; }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-submit:hover { background: var(--primary-hover); }
+
+        .toggle-link {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .toggle-link a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 14px 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 280px;
+            max-width: 360px;
+            font-size: 13px;
+            font-weight: 500;
+            animation: slideInToast 0.4s ease-out;
+            border-left: 4px solid;
+        }
+        .toast.danger { border-left-color: #ef4444; color: #991b1b; }
+        .toast.success { border-left-color: #10b981; color: #065f46; }
+        .toast.warning { border-left-color: #f59e0b; color: #92400e; }
+        .toast.info { border-left-color: #3b82f6; color: #1e40af; }
+        .toast-close {
+            margin-left: auto;
+            cursor: pointer;
+            color: #9ca3af;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .toast-close:hover { color: #374151; }
+        @keyframes slideInToast {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOutToast {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(100%); }
+        }
+        .toast.hiding {
+            animation: fadeOutToast 0.3s ease-in forwards;
+        }
+
+        /* --- Right Panel: Animated Slideshow --- */
+        .showcase-section {
+            flex: 1;
+            background: var(--bg-right);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(360deg); }
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            position: absolute;
+            width: 80%;
+            max-width: 500px;
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .graphic-box {
+            width: 320px;
+            height: 320px;
+            position: relative;
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- Redesigned Slide 1 Visuals (User profiles + Active Content Workspace) --- */
+        .workspace-window {
+            width: 230px;
+            height: 270px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 2;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .window-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 8px;
+        }
+        .window-dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; }
+        .window-dot:nth-child(2) { background: #f59e0b; }
+        .window-dot:nth-child(3) { background: #10b981; }
+        .window-title { font-size: 10px; color: #9ca3af; font-weight: 600; margin-left: auto; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .content-item {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 11px;
+            color: #374151;
+            font-weight: 500;
+            border-left: 3px solid var(--primary-blue);
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .slide.active .content-item-1 { animation: slideInContent 0.5s forwards 0.3s; }
+        .slide.active .content-item-2 { animation: slideInContent 0.5s forwards 0.6s; border-left-color: #10b981; }
+        .slide.active .content-item-3 { animation: slideInContent 0.5s forwards 0.9s; border-left-color: #8b5cf6; }
+
+        .content-tags { display: flex; gap: 4px; margin-top: 6px; }
+        .content-tag { width: 35px; height: 6px; background: #d1d5db; border-radius: 3px; }
+
+        @keyframes slideInContent {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Profile Avatars orbiting the creation canvas */
+        .profile-avatar {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            z-index: 3;
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .avatar-1 { background: linear-gradient(135deg, #ec4899, #f43f5e); top: 15px; left: -10px; }
+        .avatar-2 { background: linear-gradient(135deg, #10b981, #059669); bottom: 40px; left: -25px; }
+        .avatar-3 { background: linear-gradient(135deg, #f59e0b, #eab308); top: 60px; right: -15px; }
+        .avatar-4 { background: linear-gradient(135deg, #8b5cf6, #6366f1); bottom: 15px; right: -10px; }
+
+        .slide.active .avatar-1 { opacity: 1; transform: translate(10px, 10px); animation: floatSlow 4s infinite ease-in-out alternate 0.8s; }
+        .slide.active .avatar-2 { opacity: 1; transform: translate(10px, -10px); animation: floatSlow 4s infinite ease-in-out alternate 1.2s; }
+        .slide.active .avatar-3 { opacity: 1; transform: translate(-10px, 10px); animation: floatSlow 4s infinite ease-in-out alternate 1s; }
+        .slide.active .avatar-4 { opacity: 1; transform: translate(-10px, -10px); animation: floatSlow 4s infinite ease-in-out alternate 1.4s; }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-8px) scale(1.03); }
+        }
+
+        /* --- Slide 2 & 3 visuals --- */
+        .network-hub {
+            width: 100px; height: 100px; background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; z-index: 2;
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
+            color: var(--primary-blue); font-size: 35px;
+        }
+        .data-node {
+            position: absolute; width: 40px; height: 40px; background: #3b82f6;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; opacity: 0;
+        }
+        .slide.active .node-top { animation: shootIn1 2s infinite; }
+        .slide.active .node-left { animation: shootIn2 2s infinite 0.6s; }
+        .slide.active .node-right { animation: shootIn3 2s infinite 1.2s; }
+        
+        @keyframes shootIn1 { 0% { top: -50px; opacity: 0; } 50% { opacity: 1; } 100% { top: 100px; opacity: 0; transform: scale(0.5); } }
+        @keyframes shootIn2 { 0% { left: -50px; opacity: 0; } 50% { opacity: 1; } 100% { left: 100px; opacity: 0; transform: scale(0.5); } }
+        @keyframes shootIn3 { 0% { right: -50px; opacity: 0; } 50% { opacity: 1; } 100% { right: 100px; opacity: 0; transform: scale(0.5); } }
+
+        .chart-container {
+            display: flex; align-items: flex-end; gap: 15px; height: 200px;
+            padding-bottom: 20px; border-bottom: 4px solid rgba(255,255,255,0.3);
+        }
+        .bar { width: 40px; background: white; border-radius: 6px 6px 0 0; height: 0; }
+        .slide.active .bar-1 { animation: growBar 1s forwards 0.2s; height: 60px; }
+        .slide.active .bar-2 { animation: growBar 1s forwards 0.4s; height: 120px; }
+        .slide.active .bar-3 { animation: growBar 1s forwards 0.6s; height: 80px; }
+        .slide.active .bar-4 { animation: growBar 1s forwards 0.8s; height: 160px; }
+        @keyframes growBar { 0% { height: 0; } 100% { opacity: 1; } }
+        
+        .slide-text h2 { font-size: 32px; margin-bottom: 12px; font-weight: 700; }
+        .slide-text p { font-size: 16px; color: rgba(255, 255, 255, 0.85); line-height: 1.6; }
+
+        .slide-controls {
+            position: absolute; bottom: 40px; left: 50%;
+            transform: translateX(-50%); display: flex; gap: 10px; z-index: 10;
+        }
+        .dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3); cursor: pointer; transition: 0.3s;
+        }
+        .dot.active { background: white; transform: scale(1.3); }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; overflow: auto; }
+            .login-section { max-width: 100%; height: 100vh; }
+            .showcase-section { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="login-section">
+        <div class="content-wrapper">
+            
+            <div class="logo">
+                <i class="fa-solid fa-network-wired logo-icon"></i>
+                <span>CCI SurveyHUB</span>
+            </div>
+
+            <div class="forms-container">
+                
+                <div class="form-view {% if view != 'signup' %}active{% endif %}" id="login-form">
+                    <h1>{{ _('Log in to your Account') }}</h1>
+                    <p class="subtitle">{{ _('Welcome back! Select method to log in:') }}</p>
+
+                    <div class="social-login">
+                        <button class="social-btn">
+                            <img src="https://www.vectorlogo.zone/logos/google/google-icon.svg" alt="Google"> 
+                            Google
+                        </button>
+                    </div>
+
+                    <div class="divider">{{ _('or continue with email') }}</div>
+
+                    <form method="POST" action="{{ url_for('auth.login') }}">
+                        <div class="form-group">
+                            <i class="fa-regular fa-envelope input-icon"></i>
+                            <input type="email" name="email" class="form-control" placeholder="{{ _('Email') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <input type="password" name="password" class="form-control" placeholder="{{ _('Password') }}" required>
+                        </div>
+                        <div class="form-options">
+                            <label style="display: flex; gap: 6px; color: var(--text-muted); cursor: pointer;"><input type="checkbox" name="remember"> {{ _('Remember me') }}</label>
+                            <a href="#" class="forgot-link">{{ _('Forgot Password?') }}</a>
+                        </div>
+                        <button type="submit" class="btn-submit">{{ _('Log in') }}</button>
+                    </form>
+                    <p class="toggle-link">{{ _("Don't have an account?") }} <a onclick="toggleForms('signup')">{{ _('Create an account') }}</a></p>
+                </div>
+
+                <div class="form-view {% if view == 'signup' %}active{% endif %}" id="signup-form">
+                    <h1>{{ _('Create an Account') }}</h1>
+                    <p class="subtitle">{{ _('Join CCI SurveyHUB to start collecting data.') }}</p>
+
+                    <form method="POST" action="{{ url_for('auth.register') }}">
+                        <div class="form-group">
+                            <i class="fa-regular fa-user input-icon"></i>
+                            <input type="text" name="name" class="form-control" placeholder="{{ _('Full Name') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa-regular fa-envelope input-icon"></i>
+                            <input type="email" name="email" class="form-control" placeholder="{{ _('Work Email') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <input type="password" name="password" class="form-control" placeholder="{{ _('Create Password') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa-solid fa-shield-halved input-icon"></i>
+                            <input type="password" name="confirm_password" class="form-control" placeholder="{{ _('Confirm Password') }}" required>
+                        </div>
+                        <button type="submit" class="btn-submit" style="margin-top: 10px;">{{ _('Register Account') }}</button>
+                    </form>
+                    <p class="toggle-link">{{ _('Already have an account?') }} <a onclick="toggleForms('login')">{{ _('Back to Log in') }}</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="showcase-section" id="particles-bg">
+        <div class="slides-wrapper">
+            
+            <div class="slide active">
+                <div class="graphic-box">
+                    <div class="profile-avatar avatar-1"><i class="fa-solid fa-user-astronaut"></i></div>
+                    <div class="profile-avatar avatar-2">JD</div>
+                    <div class="profile-avatar avatar-3"><i class="fa-solid fa-user-ninja"></i></div>
+                    <div class="profile-avatar avatar-4">AM</div>
+
+                    <div class="workspace-window">
+                        <div class="window-header">
+                            <div class="window-dot"></div>
+                            <div class="window-dot"></div>
+                            <div class="window-dot"></div>
+                            <div class="window-title">{{ _('Survey Creator') }}</div>
+                        </div>
+                        <div class="content-item content-item-1">
+                            <p>{{ _('Customer Feedback Form') }}</p>
+                            <div class="content-tags"><div class="content-tag"></div><div class="content-tag" style="width:20px;"></div></div>
+                        </div>
+                        <div class="content-item content-item-2">
+                            <p>✓ {{ _('Multiple Choice Matrix') }}</p>
+                            <div class="content-tags"><div class="content-tag" style="background:#a7f3d0;"></div></div>
+                        </div>
+                        <div class="content-item content-item-3">
+                            <p>✉ {{ _('Contact Collection Field') }}</p>
+                            <div class="content-tags"><div class="content-tag" style="background:#ddd6fe; width:45px;"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-text">
+                    <h2>{{ _('Create.') }}</h2>
+                    <p>{{ _('Build dynamic, logic-driven surveys in minutes using our intuitive drag-and-drop form builder.') }}</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="graphic-box">
+                    <div class="network-hub"><i class="fa-solid fa-database"></i></div>
+                    <div class="data-node node-top"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <div class="data-node node-left"><i class="fa-solid fa-laptop"></i></div>
+                    <div class="data-node node-right"><i class="fa-solid fa-tablet-screen-button"></i></div>
+                </div>
+                <div class="slide-text">
+                    <h2>{{ _('Collect. Verify.') }}</h2>
+                    <p>{{ _('Deploy to the field instantly. Gather data offline and sync automatically with built-in GPS and photo verification.') }}</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="graphic-box">
+                    <div class="chart-container">
+                        <div class="bar bar-1"></div>
+                        <div class="bar bar-2"></div>
+                        <div class="bar bar-3"></div>
+                        <div class="bar bar-4"></div>
+                    </div>
+                </div>
+                <div class="slide-text">
+                    <h2>{{ _('Analyse.') }}</h2>
+                    <p>{{ _('Transform raw data into actionable insights instantly with customizable, real-time dashboards.') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-controls">
+            <div class="dot active" onclick="goToSlide(0)"></div>
+            <div class="dot" onclick="goToSlide(1)"></div>
+            <div class="dot" onclick="goToSlide(2)"></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForms(target) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+
+            if (target === 'signup') {
+                loginForm.classList.remove('active');
+                setTimeout(() => signupForm.classList.add('active'), 200);
+            } else {
+                signupForm.classList.remove('active');
+                setTimeout(() => loginForm.classList.add('active'), 200);
+            }
+        }
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let slideInterval;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        }
+
+        function goToSlide(index) {
+            clearInterval(slideInterval);
+            showSlide(index);
+            startSlideshow();
+        }
+
+        function startSlideshow() {
+            slideInterval = setInterval(nextSlide, 5000); 
+        }
+
+        function createParticles() {
+            const bg = document.getElementById('particles-bg');
+            for(let i=0; i<10; i++) {
+                let particle = document.createElement('div');
+                particle.className = 'particle';
+                let size = Math.random() * 80 + 20;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = (Math.random() * 100 + 100) + '%';
+                particle.style.animationDelay = (Math.random() * 5) + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                bg.appendChild(particle);
+            }
+        }
+
+        startSlideshow();
+        createParticles();
+
+        // Toast notifications
+        const flashMessages = [
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {category: '{{ category }}', message: '{{ message | e }}'}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        ];
+
+        function showToast(category, message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${category}`;
+            toast.innerHTML = `
+                <i class="fa-solid fa-${category === 'success' ? 'check-circle' : category === 'danger' ? 'circle-exclamation' : category === 'warning' ? 'triangle-exclamation' : 'circle-info'}"></i>
+                <span>${message}</span>
+                <i class="fa-solid fa-xmark toast-close" onclick="this.parentElement.classList.add('hiding'); setTimeout(() => this.parentElement.remove(), 300);"></i>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('hiding');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        flashMessages.forEach(f => showToast(f.category, f.message));
+    </script>
+</body>
+</html>
