@@ -1,4 +1,4 @@
-# CCI SurveyHUB — Agent Instructions
+# SurveyHUB — Agent Instructions
 
 ## Project Overview
 Flask web application for the Chamber of Commerce to create, distribute, collect, and analyse business surveys. Uses SQLite + SQLAlchemy, Jinja2 templates, and Bootstrap 5.
