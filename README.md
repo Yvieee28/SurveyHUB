@@ -1,4 +1,4 @@
-# CCI SurveyHUB
+# SurveyHUB
 
 > Create. Collect. Verify. Analyse.
 
@@ -9,7 +9,7 @@ the creation, distribution, collection and analysis of business surveys.
 
 ## Project Overview
 
-CCI SurveyHUB was built to solve a real data management problem observed during an 
+SurveyHUB was built to solve a real data management problem observed during an 
 internship at the CCI. Survey responses were scattered across multiple Excel files, 
 company records contained missing or invalid data, and analysis was slow and unreliable.
 
@@ -41,7 +41,7 @@ This application brings everything into one place:
 ## Project Structure
 
 ```
-CCI-SurveyHUB/
+SurveyHUB/
 ├── app/
 │   ├── __init__.py          # App factory, blueprint registration
 │   ├── routes/
@@ -179,7 +179,7 @@ All issues will be logged to the anomalies table and visible on the anomalies pa
 
 | Table | Purpose |
 |-------|---------|
-| users | Internal CCI staff and admins |
+| users | Internal staff and admins |
 | surveys | Survey metadata and status |
 | blocks | Question groups inside a survey |
 | questions | Individual survey questions |
