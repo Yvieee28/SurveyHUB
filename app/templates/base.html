@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
     <title>SurveyHUB</title>
 
@@ -23,12 +28,15 @@
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='css/main.css') }}?v=5"
+        href="{{ url_for('static', filename='css/main.css') }}?v=6"
     >
 
-    {% block extra_css %}{% endblock %}
+    {% block extra_css %}
+    {% endblock %}
+
 
     <style>
+
         /* ================================================================
            TOAST NOTIFICATIONS
            ================================================================ */
@@ -37,20 +45,29 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 10000;
+
+            z-index: 30000;
+
             display: flex;
             flex-direction: column;
+
             gap: 10px;
         }
 
+
         .custom-toast {
             background: #ffffff;
+
             border-radius: 10px;
+
             padding: 14px 18px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.12);
 
             display: flex;
             align-items: center;
+
             gap: 10px;
 
             min-width: 280px;
@@ -59,47 +76,72 @@
             font-size: 13px;
             font-weight: 500;
 
-            animation: slideInToast 0.4s ease-out;
+            animation:
+                slideInToast 0.4s ease-out;
+
             border-left: 4px solid;
         }
 
+
         .custom-toast.danger {
             border-left-color: #ef4444;
+
             background: #fee2e2;
+
             color: #991b1b;
         }
 
+
         .custom-toast.success {
             border-left-color: #10b981;
+
             background: #d1fae5;
+
             color: #065f46;
         }
 
+
         .custom-toast.warning {
             border-left-color: #f59e0b;
+
             background: #fef3c7;
+
             color: #92400e;
         }
 
+
         .custom-toast.info {
             border-left-color: #3b82f6;
+
             background: #dbeafe;
+
             color: #1e40af;
         }
 
+
         .custom-toast-close {
             margin-left: auto;
+
             cursor: pointer;
+
             color: #9ca3af;
+
             font-size: 14px;
-            transition: color 0.2s;
+
+            transition:
+                color 0.2s;
+
+            touch-action: manipulation;
         }
+
 
         .custom-toast-close:hover {
             color: #374151;
         }
 
+
         @keyframes slideInToast {
+
             from {
                 transform: translateX(100%);
                 opacity: 0;
@@ -109,9 +151,12 @@
                 transform: translateX(0);
                 opacity: 1;
             }
+
         }
+
 
         @keyframes fadeOutToast {
+
             from {
                 opacity: 1;
                 transform: translateX(0);
@@ -121,22 +166,25 @@
                 opacity: 0;
                 transform: translateX(100%);
             }
+
         }
 
+
         .custom-toast.hiding {
-            animation: fadeOutToast 0.3s ease-in forwards;
+            animation:
+                fadeOutToast 0.3s ease-in forwards;
         }
 
 
         /* ================================================================
-           AI CHAT
+           AI CHAT BUTTON
            ================================================================ */
 
         .ai-chat-button {
             position: fixed;
 
-            bottom: 24px;
             right: 24px;
+            bottom: 24px;
 
             width: 56px;
             height: 56px;
@@ -144,13 +192,15 @@
             border-radius: 50%;
 
             background: #3b82f6;
-            color: white;
+
+            color: #ffffff;
 
             border: none;
 
             cursor: pointer;
 
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            box-shadow:
+                0 4px 12px rgba(59, 130, 246, 0.3);
 
             display: flex;
             align-items: center;
@@ -158,21 +208,38 @@
 
             font-size: 24px;
 
-            z-index: 9999;
+            z-index: 20000;
 
-            transition: all 0.3s ease;
+            transition:
+                all 0.3s ease;
+
+            touch-action: manipulation;
+
+            -webkit-tap-highlight-color: transparent;
         }
+
 
         .ai-chat-button:hover {
             background: #2563eb;
+
             transform: scale(1.05);
         }
+
+
+        .ai-chat-button:active {
+            transform: scale(0.96);
+        }
+
+
+        /* ================================================================
+           AI CHAT PANEL
+           ================================================================ */
 
         .ai-chat-panel {
             position: fixed;
 
-            bottom: 96px;
             right: 24px;
+            bottom: 96px;
 
             width: 380px;
             max-width: calc(100vw - 48px);
@@ -180,61 +247,88 @@
             height: 500px;
             max-height: calc(100vh - 130px);
 
-            background: white;
+            background: #ffffff;
 
             border-radius: 12px;
 
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.15);
 
             display: none;
+
             flex-direction: column;
 
-            z-index: 9999;
+            z-index: 19999;
 
             overflow: hidden;
         }
 
+
         .ai-chat-panel.active {
-            display: flex;
-            animation: slideUp 0.3s ease;
+            display: flex !important;
+
+            animation:
+                slideUp 0.3s ease;
         }
 
+
         @keyframes slideUp {
+
             from {
                 opacity: 0;
-                transform: translateY(20px);
+
+                transform:
+                    translateY(20px);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+
+                transform:
+                    translateY(0);
             }
+
         }
+
+
+        /* ================================================================
+           CHAT HEADER
+           ================================================================ */
 
         .ai-chat-header {
             background: #3b82f6;
-            color: white;
+
+            color: #ffffff;
 
             padding: 16px;
 
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+
+            flex-shrink: 0;
         }
+
 
         .ai-chat-header h3 {
             margin: 0;
 
             font-size: 16px;
             font-weight: 600;
+
+            display: flex;
+            align-items: center;
+
+            gap: 6px;
         }
+
 
         .ai-chat-close {
             background: none;
 
             border: none;
 
-            color: white;
+            color: #ffffff;
 
             cursor: pointer;
 
@@ -242,16 +336,29 @@
 
             padding: 0;
 
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
 
             display: flex;
             align-items: center;
             justify-content: center;
+
+            flex-shrink: 0;
+
+            touch-action: manipulation;
+
+            -webkit-tap-highlight-color: transparent;
         }
+
+
+        /* ================================================================
+           CHAT MESSAGES
+           ================================================================ */
 
         .ai-chat-messages {
             flex: 1;
+
+            min-height: 0;
 
             overflow-y: auto;
             overflow-x: hidden;
@@ -262,7 +369,12 @@
             flex-direction: column;
 
             gap: 12px;
+
+            -webkit-overflow-scrolling: touch;
+
+            overscroll-behavior: contain;
         }
+
 
         .ai-message,
         .user-message {
@@ -273,14 +385,20 @@
             max-width: 85%;
 
             font-size: 14px;
+
             line-height: 1.5;
 
             word-wrap: break-word;
-            overflow-wrap: break-word;
+
+            overflow-wrap: anywhere;
+
+            white-space: normal;
         }
+
 
         .ai-message {
             background: #f1f5f9;
+
             color: #1e293b;
 
             align-self: flex-start;
@@ -288,28 +406,35 @@
             border-bottom-left-radius: 4px;
         }
 
+
         .user-message {
             background: #3b82f6;
-            color: white;
+
+            color: #ffffff;
 
             align-self: flex-end;
 
             border-bottom-right-radius: 4px;
         }
 
+
         .ai-message ul,
         .ai-message ol {
             margin: 4px 0;
+
             padding-left: 20px;
         }
+
 
         .ai-message li {
             margin: 2px 0;
         }
 
+
         .ai-message strong {
             font-weight: 600;
         }
+
 
         .ai-message code {
             background: #e2e8f0;
@@ -321,34 +446,54 @@
             font-size: 13px;
         }
 
+
         .ai-message p {
             margin: 4px 0;
         }
+
 
         .ai-message p:first-child {
             margin-top: 0;
         }
 
+
         .ai-message p:last-child {
             margin-bottom: 0;
         }
 
+
+        /* ================================================================
+           CHAT INPUT
+           ================================================================ */
+
         .ai-chat-input-container {
-            border-top: 1px solid #e2e8f0;
+            width: 100%;
+
+            border-top:
+                1px solid #e2e8f0;
+
+            background: #ffffff;
 
             padding: 12px;
 
             display: flex;
+            align-items: center;
 
             gap: 8px;
+
+            flex-shrink: 0;
         }
+
 
         .ai-chat-input {
             flex: 1;
 
             min-width: 0;
 
-            border: 1px solid #e2e8f0;
+            width: 100%;
+
+            border:
+                1px solid #e2e8f0;
 
             border-radius: 8px;
 
@@ -357,15 +502,22 @@
             font-size: 14px;
 
             outline: none;
+
+            background: #ffffff;
+
+            color: #1e293b;
         }
+
 
         .ai-chat-input:focus {
             border-color: #3b82f6;
         }
 
+
         .ai-chat-send {
             background: #3b82f6;
-            color: white;
+
+            color: #ffffff;
 
             border: none;
 
@@ -379,47 +531,58 @@
             font-weight: 500;
 
             flex-shrink: 0;
+
+            touch-action: manipulation;
+
+            -webkit-tap-highlight-color: transparent;
         }
+
 
         .ai-chat-send:hover {
             background: #2563eb;
         }
 
+
+        .ai-chat-send:active {
+            transform: scale(0.97);
+        }
+
+
         .ai-chat-send:disabled {
             background: #94a3b8;
+
             cursor: not-allowed;
         }
 
 
         /* ================================================================
-           RESPONSIVE TABLET
+           TABLET
            ================================================================ */
 
         @media (max-width: 992px) {
 
-            .custom-toast-container {
-                right: 14px;
-            }
-
             .ai-chat-panel {
                 width: 360px;
             }
+
         }
 
 
         /* ================================================================
-           RESPONSIVE PHONE / SMALL TABLET
+           MOBILE
            ================================================================ */
 
         @media (max-width: 768px) {
 
             .custom-toast-container {
                 top: 10px;
+
                 left: 10px;
                 right: 10px;
 
                 width: auto;
             }
+
 
             .custom-toast {
                 width: 100%;
@@ -428,55 +591,147 @@
                 max-width: none;
             }
 
+
             .ai-chat-button {
-                width: 50px;
-                height: 50px;
+                position: fixed !important;
 
-                right: 16px;
-                bottom: 16px;
+                width: 54px;
+                height: 54px;
 
-                font-size: 21px;
+                right: 16px !important;
+
+                bottom:
+                    calc(
+                        16px +
+                        env(safe-area-inset-bottom)
+                    ) !important;
+
+                font-size: 22px;
+
+                z-index: 20000 !important;
+
+                pointer-events: auto !important;
             }
+
 
             .ai-chat-panel {
-                width: calc(100vw - 24px);
-                max-width: none;
+                position: fixed !important;
 
-                height: min(500px, calc(100vh - 100px));
-                max-height: calc(100vh - 100px);
+                left: 10px !important;
+                right: 10px !important;
 
-                left: 12px;
-                right: 12px;
+                bottom:
+                    calc(
+                        82px +
+                        env(safe-area-inset-bottom)
+                    ) !important;
 
-                bottom: 78px;
+                width: auto !important;
 
-                border-radius: 12px;
+                max-width: none !important;
+
+                height:
+                    calc(
+                        100dvh -
+                        110px -
+                        env(safe-area-inset-bottom)
+                    ) !important;
+
+                max-height:
+                    calc(
+                        100dvh -
+                        110px
+                    ) !important;
+
+                border-radius: 14px;
+
+                z-index: 19999 !important;
+
+                overflow: hidden;
+
+                pointer-events: auto;
             }
+
+
+            .ai-chat-panel.active {
+                display: flex !important;
+            }
+
+
+            .ai-chat-header {
+                padding: 13px 14px;
+            }
+
+
+            .ai-chat-header h3 {
+                font-size: 15px;
+            }
+
 
             .ai-chat-messages {
+                flex: 1;
+
+                min-height: 0;
+
                 padding: 12px;
+
+                overflow-y: auto !important;
+
+                -webkit-overflow-scrolling: touch;
             }
+
 
             .ai-message,
             .user-message {
                 max-width: 90%;
 
                 font-size: 13px;
+
+                padding: 9px 12px;
             }
+
 
             .ai-chat-input-container {
-                padding: 10px;
-            }
-
-            .ai-chat-input {
                 width: 100%;
 
-                min-width: 0;
+                display: flex;
+
+                padding:
+                    10px
+                    10px
+                    calc(
+                        10px +
+                        env(safe-area-inset-bottom)
+                    )
+                    10px;
+
+                gap: 8px;
             }
 
-            .ai-chat-send {
-                padding: 8px 12px;
+
+            .ai-chat-input {
+                flex: 1;
+
+                min-width: 0;
+
+                width: 100%;
+
+                /*
+                   16px prevents iPhone browsers
+                   from zooming automatically.
+                */
+                font-size: 16px;
             }
+
+
+            .ai-chat-send {
+                flex-shrink: 0;
+
+                padding: 9px 13px;
+
+                font-size: 14px;
+            }
+
         }
 
 
@@ -486,52 +741,111 @@
 
         @media (max-width: 480px) {
 
-            .ai-chat-panel {
-                width: calc(100vw - 16px);
+            .ai-chat-button {
+                width: 52px;
+                height: 52px;
 
-                left: 8px;
-                right: 8px;
+                right: 12px !important;
 
-                bottom: 74px;
-
-                height: calc(100vh - 90px);
-                max-height: 600px;
+                bottom:
+                    calc(
+                        12px +
+                        env(safe-area-inset-bottom)
+                    ) !important;
             }
+
+
+            .ai-chat-panel {
+                left: 6px !important;
+                right: 6px !important;
+
+                bottom:
+                    calc(
+                        72px +
+                        env(safe-area-inset-bottom)
+                    ) !important;
+
+                width: auto !important;
+
+                height:
+                    calc(
+                        100dvh -
+                        86px -
+                        env(safe-area-inset-bottom)
+                    ) !important;
+
+                max-height: none !important;
+
+                border-radius: 12px;
+            }
+
 
             .ai-chat-header {
-                padding: 12px;
+                padding: 11px 12px;
             }
+
 
             .ai-chat-header h3 {
                 font-size: 14px;
             }
 
-            .ai-chat-input-container {
-                gap: 6px;
-                padding: 8px;
+
+            .ai-chat-messages {
+                padding: 10px;
             }
 
-            .ai-chat-input {
+
+            .ai-message,
+            .user-message {
+                max-width: 92%;
+
                 font-size: 13px;
             }
+
+
+            .ai-chat-input-container {
+                padding:
+                    8px
+                    8px
+                    calc(
+                        8px +
+                        env(safe-area-inset-bottom)
+                    )
+                    8px;
+
+                gap: 6px;
+            }
+
 
             .ai-chat-send {
+                padding: 9px 11px;
+
                 font-size: 13px;
-                padding: 8px 10px;
             }
+
         }
 
     </style>
+
 </head>
+
 
 <body>
 
+
+    <!-- ================================================================
+         APPLICATION LAYOUT
+         ================================================================ -->
+
     <div class="app-layout-wrapper">
 
-        <!-- =============================================================
+
+        <!-- ============================================================
              SIDEBAR
-             ============================================================= -->
+             ============================================================ -->
+
         <nav id="sidebar-panel">
+
 
             <div class="sidebar-branding">
 
@@ -541,11 +855,13 @@
                     class="brand-logo"
                 >
 
+
                 <div class="brand-text-box">
 
                     <span class="brand-title">
                         SurveyHUB
                     </span>
+
 
                     <span class="brand-subtitle">
                         SURVEY PLATFORM
@@ -557,14 +873,19 @@
 
 
             <!-- Navigation -->
+
             <div class="sidebar-menu-links">
+
 
                 <a
                     href="/"
                     class="menu-item {{ 'active' if request.endpoint == 'dashboard.index' else '' }}"
                 >
+
                     <i class="bi bi-grid-1x2-fill"></i>
+
                     {{ _('Dashboard') }}
+
                 </a>
 
 
@@ -572,8 +893,11 @@
                     href="/surveys"
                     class="menu-item {{ 'active' if request.endpoint == 'surveys.survey_list' else '' }}"
                 >
+
                     <i class="bi bi-card-text"></i>
+
                     {{ _('Surveys') }}
+
                 </a>
 
 
@@ -581,8 +905,11 @@
                     href="/anomalies"
                     class="menu-item {{ 'active' if request.endpoint == 'dashboard.anomalies' else '' }}"
                 >
+
                     <i class="bi bi-exclamation-triangle-fill"></i>
+
                     {{ _('Anomalies') }}
+
                 </a>
 
 
@@ -590,15 +917,21 @@
                     href="/exports"
                     class="menu-item {{ 'active' if request.endpoint == 'exports.export_index' else '' }}"
                 >
+
                     <i class="bi bi-download"></i>
+
                     {{ _('Exports') }}
+
                 </a>
+
 
             </div>
 
 
             <!-- User Profile -->
+
             <div class="sidebar-footer-profile">
+
 
                 <form
                     action="{{ url_for('language.toggle_language') }}"
@@ -612,10 +945,16 @@
                         title="{{ _('Switch language') }}"
                         style="font-size: 12px; padding: 6px 12px;"
                     >
+
                         <i class="bi bi-globe2"></i>
 
                         {{ _('Switch to') }}
-                        {{ 'EN' if session.get('language', 'fr') == 'fr' else 'FR' }}
+
+                        {{
+                            'EN'
+                            if session.get('language', 'fr') == 'fr'
+                            else 'FR'
+                        }}
 
                     </button>
 
@@ -623,6 +962,7 @@
 
 
                 <div class="profile-meta-row">
+
 
                     <div class="profile-avatar">
 
@@ -636,6 +976,7 @@
 
 
                     <div class="profile-identity">
+
 
                         <span class="user-fullname">
 
@@ -658,6 +999,7 @@
 
                         </span>
 
+
                     </div>
 
                 </div>
@@ -667,21 +1009,26 @@
                     href="{{ url_for('auth.logout') }}"
                     class="logout-action-trigger"
                 >
+
                     <i class="bi bi-box-arrow-left"></i>
 
                     {{ _('Logout') }}
+
                 </a>
 
+
             </div>
+
 
         </nav>
 
 
-        <!-- =============================================================
+        <!-- ============================================================
              MAIN CONTENT
-             ============================================================= -->
+             ============================================================ -->
 
         <div id="main-content-workspace">
+
 
             <main class="inner-workspace-container">
 
@@ -690,24 +1037,35 @@
 
             </main>
 
+
         </div>
+
 
     </div>
 
 
-    <!-- Loading spinner -->
+    <!-- ================================================================
+         LOADING SPINNER
+         ================================================================ -->
+
     {% include "components/_spinner.html" %}
 
 
-    <!-- Bootstrap -->
+    <!-- ================================================================
+         BOOTSTRAP
+         ================================================================ -->
+
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
     </script>
 
 
-    <!-- Main JS -->
+    <!-- ================================================================
+         APPLICATION JS
+         ================================================================ -->
+
     <script
-        src="{{ url_for('static', filename='js/main.js') }}?v=5">
+        src="{{ url_for('static', filename='js/main.js') }}?v=6">
     </script>
 
 
@@ -715,184 +1073,269 @@
     {% endblock %}
 
 
-    <!-- =============================================================
+    <!-- ================================================================
          TOAST SCRIPT
-         ============================================================= -->
+         ================================================================ -->
 
     <script>
 
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const flashMessages = [
-
-                {% with messages = get_flashed_messages(with_categories=true) %}
-
-                    {% if messages %}
-
-                        {% for category, message in messages %}
-
-                            {
-                                category: {{ category|tojson }},
-                                message: {{ message|tojson }}
-                            }
-
-                            {% if not loop.last %}
-                                ,
-                            {% endif %}
-
-                        {% endfor %}
-
-                    {% endif %}
-
-                {% endwith %}
-
-            ];
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
 
 
-            function showToast(category, message) {
+                const flashMessages = [
 
-                const container =
-                    document.getElementById('custom-toast-container');
+                    {% with messages = get_flashed_messages(with_categories=true) %}
 
-                if (!container) {
-                    return;
+                        {% if messages %}
+
+                            {% for category, message in messages %}
+
+                                {
+                                    category:
+                                        {{ category|tojson }},
+
+                                    message:
+                                        {{ message|tojson }}
+                                }
+
+                                {% if not loop.last %}
+                                    ,
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% endwith %}
+
+                ];
+
+
+                function showToast(
+                    category,
+                    message
+                ) {
+
+
+                    const container =
+                        document.getElementById(
+                            'custom-toast-container'
+                        );
+
+
+                    if (!container) {
+                        return;
+                    }
+
+
+                    const toast =
+                        document.createElement(
+                            'div'
+                        );
+
+
+                    toast.className =
+                        `custom-toast ${category}`;
+
+
+                    const iconMap = {
+
+                        success:
+                            'bi-check-circle-fill',
+
+                        danger:
+                            'bi-exclamation-circle-fill',
+
+                        warning:
+                            'bi-exclamation-triangle-fill',
+
+                        info:
+                            'bi-info-circle-fill'
+
+                    };
+
+
+                    toast.innerHTML = `
+
+                        <i class="bi ${
+                            iconMap[category]
+                            ||
+                            'bi-info-circle-fill'
+                        }"></i>
+
+                        <span>
+                            ${message}
+                        </span>
+
+                        <i
+                            class="
+                                bi
+                                bi-x-lg
+                                custom-toast-close
+                            "
+                        ></i>
+
+                    `;
+
+
+                    const closeButton =
+                        toast.querySelector(
+                            '.custom-toast-close'
+                        );
+
+
+                    closeButton.addEventListener(
+                        'click',
+                        function () {
+
+                            toast.classList.add(
+                                'hiding'
+                            );
+
+
+                            setTimeout(
+                                function () {
+                                    toast.remove();
+                                },
+                                300
+                            );
+
+                        }
+                    );
+
+
+                    container.appendChild(
+                        toast
+                    );
+
+
+                    setTimeout(
+                        function () {
+
+                            toast.classList.add(
+                                'hiding'
+                            );
+
+
+                            setTimeout(
+                                function () {
+                                    toast.remove();
+                                },
+                                300
+                            );
+
+                        },
+                        4000
+                    );
+
                 }
 
 
-                const toast =
-                    document.createElement('div');
+                flashMessages.forEach(
+                    function (flash) {
 
+                        showToast(
+                            flash.category,
+                            flash.message
+                        );
 
-                toast.className =
-                    `custom-toast ${category}`;
-
-
-                const iconMap = {
-
-                    success: 'bi-check-circle-fill',
-
-                    danger: 'bi-exclamation-circle-fill',
-
-                    warning: 'bi-exclamation-triangle-fill',
-
-                    info: 'bi-info-circle-fill'
-
-                };
-
-
-                toast.innerHTML = `
-
-                    <i class="bi ${iconMap[category] || 'bi-info-circle-fill'}"></i>
-
-                    <span>${message}</span>
-
-                    <i
-                        class="bi bi-x-lg custom-toast-close"
-                        onclick="
-                            this.parentElement.classList.add('hiding');
-                            setTimeout(
-                                () => this.parentElement.remove(),
-                                300
-                            );
-                        "
-                    ></i>
-
-                `;
-
-
-                container.appendChild(toast);
-
-
-                setTimeout(() => {
-
-                    toast.classList.add('hiding');
-
-
-                    setTimeout(() => {
-
-                        toast.remove();
-
-                    }, 300);
-
-                }, 4000);
-
-            }
-
-
-            flashMessages.forEach(function (flash) {
-
-                showToast(
-                    flash.category,
-                    flash.message
+                    }
                 );
 
-            });
+
+                window.confirmAction =
+                    function (
+                        title,
+                        message,
+                        callback,
+                        buttonText,
+                        buttonClass
+                    ) {
 
 
-            window.confirmAction = function (
-                title,
-                message,
-                callback,
-                buttonText,
-                buttonClass
-            ) {
-
-                document
-                    .getElementById('confirmModalTitle')
-                    .textContent =
-                        title ||
-                        '{{ _("Confirm Action") }}';
+                        document
+                            .getElementById(
+                                'confirmModalTitle'
+                            )
+                            .textContent =
+                                title
+                                ||
+                                '{{ _("Confirm Action") }}';
 
 
-                document
-                    .getElementById('confirmModalBody')
-                    .textContent =
-                        message ||
-                        '{{ _("Are you sure?") }}';
+                        document
+                            .getElementById(
+                                'confirmModalBody'
+                            )
+                            .textContent =
+                                message
+                                ||
+                                '{{ _("Are you sure?") }}';
 
 
-                const actionBtn =
-                    document.getElementById('confirmModalAction');
+                        const actionBtn =
+                            document.getElementById(
+                                'confirmModalAction'
+                            );
 
 
-                actionBtn.textContent =
-                    buttonText ||
-                    '{{ _("Confirm") }}';
+                        actionBtn.textContent =
+                            buttonText
+                            ||
+                            '{{ _("Confirm") }}';
 
 
-                actionBtn.className =
-                    'btn ' +
-                    (buttonClass || 'btn-danger');
+                        actionBtn.className =
+                            'btn '
+                            +
+                            (
+                                buttonClass
+                                ||
+                                'btn-danger'
+                            );
 
 
-                actionBtn.onclick = function () {
-
-                    callback();
-
-
-                    bootstrap.Modal
-                        .getInstance(
-                            document.getElementById('confirmModal')
-                        )
-                        .hide();
-
-                };
+                        actionBtn.onclick =
+                            function () {
 
 
-                new bootstrap.Modal(
-                    document.getElementById('confirmModal')
-                ).show();
+                                callback();
 
-            };
 
-        });
+                                bootstrap.Modal
+                                    .getInstance(
+                                        document
+                                            .getElementById(
+                                                'confirmModal'
+                                            )
+                                    )
+                                    .hide();
+
+                            };
+
+
+                        new bootstrap.Modal(
+
+                            document.getElementById(
+                                'confirmModal'
+                            )
+
+                        ).show();
+
+                    };
+
+
+            }
+        );
 
     </script>
 
 
-    <!-- =============================================================
+    <!-- ================================================================
          CONFIRM MODAL
-         ============================================================= -->
+         ================================================================ -->
 
     <div
         class="modal fade"
@@ -901,17 +1344,28 @@
         aria-hidden="true"
     >
 
-        <div class="modal-dialog modal-dialog-centered">
+
+        <div
+            class="
+                modal-dialog
+                modal-dialog-centered
+            "
+        >
+
 
             <div class="modal-content">
 
+
                 <div class="modal-header">
+
 
                     <h5
                         class="modal-title"
                         id="confirmModalTitle"
                     >
+
                         {{ _('Confirm Action') }}
+
                     </h5>
 
 
@@ -919,8 +1373,10 @@
                         type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
-                        aria-label="Close">
+                        aria-label="Close"
+                    >
                     </button>
+
 
                 </div>
 
@@ -930,19 +1386,24 @@
                     id="confirmModalBody"
                 >
 
-                    {{ _('Are you sure you want to proceed?') }}
+                    {{
+                        _('Are you sure you want to proceed?')
+                    }}
 
                 </div>
 
 
                 <div class="modal-footer">
 
+
                     <button
                         type="button"
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
                     >
+
                         {{ _('Cancel') }}
+
                     </button>
 
 
@@ -951,37 +1412,52 @@
                         class="btn btn-danger"
                         id="confirmModalAction"
                     >
+
                         {{ _('Confirm') }}
+
                     </button>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
+
     </div>
 
 
-    <!-- Toast container -->
+    <!-- ================================================================
+         TOAST CONTAINER
+         ================================================================ -->
+
     <div
         class="custom-toast-container"
-        id="custom-toast-container">
+        id="custom-toast-container"
+    >
     </div>
 
 
-    <!-- =============================================================
-         AI ASSISTANT
-         ============================================================= -->
+    <!-- ================================================================
+         MARKED JS
+         ================================================================ -->
 
     <script
         src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
     </script>
 
 
+    <!-- ================================================================
+         CHAT BUTTON
+         ================================================================ -->
+
     <button
+        type="button"
         class="ai-chat-button"
-        onclick="toggleChatPanel()"
+        id="aiChatButton"
         title="{{ _('AI Assistant') }}"
         aria-label="{{ _('Open AI Assistant') }}"
     >
@@ -991,12 +1467,20 @@
     </button>
 
 
+    <!-- ================================================================
+         CHAT PANEL
+         ================================================================ -->
+
     <div
         class="ai-chat-panel"
         id="aiChatPanel"
+        role="dialog"
+        aria-label="{{ _('AI Assistant') }}"
     >
 
+
         <div class="ai-chat-header">
+
 
             <h3>
 
@@ -1008,14 +1492,16 @@
 
 
             <button
+                type="button"
                 class="ai-chat-close"
-                onclick="toggleChatPanel()"
+                id="aiChatClose"
                 aria-label="{{ _('Close') }}"
             >
 
                 <i class="bi bi-x-lg"></i>
 
             </button>
+
 
         </div>
 
@@ -1025,231 +1511,477 @@
             id="aiChatMessages"
         >
 
+
             <div class="ai-message">
 
                 {{
-                    _("Hello! I'm your SurveyHUB assistant. How can I help you today?")
+                    _(
+                        "Hello! I'm your SurveyHUB assistant. How can I help you today?"
+                    )
                 }}
 
             </div>
+
 
         </div>
 
 
         <div class="ai-chat-input-container">
 
+
             <input
                 type="text"
                 class="ai-chat-input"
                 id="aiChatInput"
+                autocomplete="off"
                 placeholder="{{ _('Ask me anything about SurveyHUB...') }}"
-                onkeypress="handleChatKeyPress(event)"
             >
 
 
             <button
+                type="button"
                 class="ai-chat-send"
                 id="aiChatSend"
-                onclick="sendMessage()"
             >
 
                 {{ _('Send') }}
 
             </button>
 
+
         </div>
+
 
     </div>
 
 
-    <!-- =============================================================
-         AI CHAT SCRIPT
-         ============================================================= -->
+    <!-- ================================================================
+         CHAT SCRIPT
+         ================================================================ -->
 
     <script>
 
-        function toggleChatPanel() {
-
-            const panel =
-                document.getElementById('aiChatPanel');
-
-            panel.classList.toggle('active');
+        document.addEventListener(
+            'DOMContentLoaded',
+            function () {
 
 
-            if (panel.classList.contains('active')) {
-
-                setTimeout(() => {
-
-                    document
-                        .getElementById('aiChatInput')
-                        .focus();
-
-                }, 200);
-
-            }
-
-        }
+                const chatButton =
+                    document.getElementById(
+                        'aiChatButton'
+                    );
 
 
-        function handleChatKeyPress(event) {
-
-            if (event.key === 'Enter') {
-
-                sendMessage();
-
-            }
-
-        }
+                const chatPanel =
+                    document.getElementById(
+                        'aiChatPanel'
+                    );
 
 
-        async function sendMessage() {
-
-            const input =
-                document.getElementById('aiChatInput');
-
-
-            const sendBtn =
-                document.getElementById('aiChatSend');
+                const closeButton =
+                    document.getElementById(
+                        'aiChatClose'
+                    );
 
 
-            const messages =
-                document.getElementById('aiChatMessages');
+                const input =
+                    document.getElementById(
+                        'aiChatInput'
+                    );
 
 
-            const message =
-                input.value.trim();
+                const sendButton =
+                    document.getElementById(
+                        'aiChatSend'
+                    );
 
 
-            if (!message) {
-                return;
-            }
+                const messages =
+                    document.getElementById(
+                        'aiChatMessages'
+                    );
 
 
-            input.value = '';
+                function openChatPanel() {
 
-            sendBtn.disabled = true;
-
-
-            const userMsg =
-                document.createElement('div');
+                    chatPanel.classList.add(
+                        'active'
+                    );
 
 
-            userMsg.className =
-                'user-message';
+                    document.body.classList.add(
+                        'chat-open'
+                    );
 
 
-            userMsg.textContent =
-                message;
+                    setTimeout(
+                        function () {
+
+                            input.focus();
+
+                        },
+                        150
+                    );
+
+                }
 
 
-            messages.appendChild(userMsg);
+                function closeChatPanel() {
+
+                    chatPanel.classList.remove(
+                        'active'
+                    );
 
 
-            const loadingMsg =
-                document.createElement('div');
+                    document.body.classList.remove(
+                        'chat-open'
+                    );
+
+                }
 
 
-            loadingMsg.className =
-                'ai-message';
+                function toggleChatPanel() {
+
+                    if (
+                        chatPanel.classList
+                            .contains('active')
+                    ) {
+
+                        closeChatPanel();
+
+                    } else {
+
+                        openChatPanel();
+
+                    }
+
+                }
 
 
-            loadingMsg.textContent =
-                '{{ _("Thinking...") }}';
+                chatButton.addEventListener(
+                    'click',
+                    function (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                        toggleChatPanel();
+
+                    }
+                );
 
 
-            messages.appendChild(loadingMsg);
+                closeButton.addEventListener(
+                    'click',
+                    function (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                        closeChatPanel();
+
+                    }
+                );
 
 
-            messages.scrollTop =
-                messages.scrollHeight;
+                /*
+                 * Touch support.
+                 * Useful on phones where click can
+                 * occasionally be swallowed by
+                 * overlapping elements.
+                 */
+
+                chatButton.addEventListener(
+                    'touchend',
+                    function (event) {
+
+                        event.preventDefault();
+
+                        toggleChatPanel();
+
+                    },
+                    {
+                        passive: false
+                    }
+                );
 
 
-            try {
+                closeButton.addEventListener(
+                    'touchend',
+                    function (event) {
 
-                const response =
-                    await fetch(
-                        '/assistant/ask',
-                        {
+                        event.preventDefault();
 
-                            method: 'POST',
+                        closeChatPanel();
 
-                            headers: {
+                    },
+                    {
+                        passive: false
+                    }
+                );
 
-                                'Content-Type':
-                                    'application/json'
 
-                            },
+                input.addEventListener(
+                    'keydown',
+                    function (event) {
 
-                            body: JSON.stringify({
+                        if (
+                            event.key === 'Enter'
+                            &&
+                            !event.shiftKey
+                        ) {
 
-                                message: message
+                            event.preventDefault();
 
-                            })
+                            sendMessage();
 
                         }
+
+                    }
+                );
+
+
+                sendButton.addEventListener(
+                    'click',
+                    function (event) {
+
+                        event.preventDefault();
+
+                        sendMessage();
+
+                    }
+                );
+
+
+                async function sendMessage() {
+
+
+                    const message =
+                        input.value.trim();
+
+
+                    if (!message) {
+                        return;
+                    }
+
+
+                    input.value = '';
+
+
+                    sendButton.disabled =
+                        true;
+
+
+                    const userMsg =
+                        document.createElement(
+                            'div'
+                        );
+
+
+                    userMsg.className =
+                        'user-message';
+
+
+                    userMsg.textContent =
+                        message;
+
+
+                    messages.appendChild(
+                        userMsg
                     );
 
 
-                const data =
-                    await response.json();
+                    const loadingMsg =
+                        document.createElement(
+                            'div'
+                        );
 
 
-                loadingMsg.remove();
+                    loadingMsg.className =
+                        'ai-message';
 
 
-                const aiMsg =
-                    document.createElement('div');
+                    loadingMsg.textContent =
+                        '{{ _("Thinking...") }}';
 
 
-                aiMsg.className =
-                    'ai-message';
-
-
-                aiMsg.innerHTML =
-                    marked.parse(
-                        data.response ||
-                        data.error ||
-                        '{{ _("Sorry, I could not process your request.") }}'
+                    messages.appendChild(
+                        loadingMsg
                     );
 
 
-                messages.appendChild(aiMsg);
+                    messages.scrollTop =
+                        messages.scrollHeight;
 
 
-            } catch (error) {
-
-                loadingMsg.remove();
+                    try {
 
 
-                const errorMsg =
-                    document.createElement('div');
+                        const response =
+                            await fetch(
+                                '/assistant/ask',
+                                {
+
+                                    method:
+                                        'POST',
+
+                                    headers: {
+
+                                        'Content-Type':
+                                            'application/json'
+
+                                    },
+
+                                    body:
+                                        JSON.stringify(
+                                            {
+                                                message:
+                                                    message
+                                            }
+                                        )
+
+                                }
+                            );
 
 
-                errorMsg.className =
-                    'ai-message';
+                        const data =
+                            await response.json();
 
 
-                errorMsg.textContent =
-                    '{{ _("Sorry, an error occurred. Please try again.") }}';
+                        loadingMsg.remove();
 
 
-                messages.appendChild(errorMsg);
+                        const aiMsg =
+                            document.createElement(
+                                'div'
+                            );
+
+
+                        aiMsg.className =
+                            'ai-message';
+
+
+                        aiMsg.innerHTML =
+                            marked.parse(
+
+                                data.response
+                                ||
+                                data.error
+                                ||
+                                '{{ _("Sorry, I could not process your request.") }}'
+
+                            );
+
+
+                        messages.appendChild(
+                            aiMsg
+                        );
+
+
+                    } catch (error) {
+
+
+                        console.error(
+                            'AI chat error:',
+                            error
+                        );
+
+
+                        loadingMsg.remove();
+
+
+                        const errorMsg =
+                            document.createElement(
+                                'div'
+                            );
+
+
+                        errorMsg.className =
+                            'ai-message';
+
+
+                        errorMsg.textContent =
+                            '{{ _("Sorry, an error occurred. Please try again.") }}';
+
+
+                        messages.appendChild(
+                            errorMsg
+                        );
+
+
+                    } finally {
+
+
+                        sendButton.disabled =
+                            false;
+
+
+                        messages.scrollTop =
+                            messages.scrollHeight;
+
+
+                        /*
+                         * On desktop we refocus
+                         * automatically.
+                         * On mobile we avoid forcing
+                         * the keyboard to reopen.
+                         */
+
+                        if (
+                            window.innerWidth > 768
+                        ) {
+
+                            input.focus();
+
+                        }
+
+
+                    }
+
+
+                }
+
+
+                /*
+                 * Keep the panel visible if the
+                 * device rotates.
+                 */
+
+                window.addEventListener(
+                    'orientationchange',
+                    function () {
+
+                        setTimeout(
+                            function () {
+
+                                if (
+                                    chatPanel.classList
+                                        .contains(
+                                            'active'
+                                        )
+                                ) {
+
+                                    messages.scrollTop =
+                                        messages.scrollHeight;
+
+                                }
+
+                            },
+                            250
+                        );
+
+                    }
+                );
+
 
             }
-
-
-            sendBtn.disabled = false;
-
-
-            messages.scrollTop =
-                messages.scrollHeight;
-
-
-            input.focus();
-
-        }
+        );
 
     </script>
 
+
 </body>
+
 </html>
