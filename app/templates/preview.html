@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview — {{ survey.title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .form-input-readonly {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            color: #94a3b8;
+            background: #f8fafc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-3xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center text-white">
+                        <i class="fas fa-square-poll-horizontal text-sm"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-800">CCI SurveyHUB</span>
+                    <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
+                        <i class="fas fa-eye mr-1"></i> {{ _('Preview') }}
+                    </span>
+                </div>
+                <a href="{{ url_for('surveys.survey_builder', id=survey.id) }}" class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-xs font-medium transition">
+                    <i class="fas fa-arrow-left"></i> {{ _('Back to Builder') }}
+                </a>
+            </div>
+            <h1 class="text-xl font-bold text-slate-800">{{ survey.title }}</h1>
+            {% if survey.description %}
+                <p class="text-slate-500 text-sm mt-1">{{ survey.description }}</p>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Survey Content (Read-Only) -->
+    <main class="max-w-3xl mx-auto px-6 py-8 space-y-6">
+
+        <!-- Company Information Section (Read-Only) -->
+        <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+            <div class="bg-slate-100 border-b border-slate-200 px-6 py-3">
+                <h2 class="text-sm font-semibold text-slate-700">{{ _('Company Information') }}</h2>
+                <p class="text-xs text-slate-500 mt-0.5">{{ _('Respondents will fill in these fields before answering the survey.') }}</p>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">{{ _('Company Name') }} <span class="text-red-500">*</span></label>
+                    <div class="form-input-readonly">{{ _('Company name will be entered here') }}</div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">SIRET <span class="text-red-500">*</span></label>
+                    <div class="form-input-readonly">{{ _('14-digit SIRET number') }}</div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">{{ _('Email') }}</label>
+                    <div class="form-input-readonly">contact@company.com</div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">{{ _('Phone') }}</label>
+                    <div class="form-input-readonly">06 12 34 56 78</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Survey Blocks and Questions (Read-Only) -->
+        {% for block in survey.blocks %}
+        <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+            <div class="bg-slate-100 border-b border-slate-200 px-6 py-3">
+                <h2 class="text-sm font-semibold text-slate-700">{{ block.title }}</h2>
+            </div>
+
+            <div class="p-6 space-y-6">
+                {% for question in block.questions %}
+                <div class="space-y-3">
+                    <div class="flex items-start gap-2">
+                        <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">{{ _('Q') }}{{ question.position }}</span>
+                        <h3 class="text-sm font-medium text-slate-800 flex-1">{{ question.text }}</h3>
+                        {% if question.required %}
+                            <span class="text-xs text-red-500 font-medium">{{ _('* Required') }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="space-y-2 ml-6">
+                        {% for choice in question.choices %}
+                        <div class="flex items-center gap-3 text-sm text-slate-600 p-2 rounded-md">
+                            <div class="w-4 h-4 border-2 border-slate-300 rounded-full bg-slate-50 flex-shrink-0"></div>
+                            <span>{{ choice.choice_text }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Empty State -->
+        {% if survey.blocks|length == 0 %}
+        <div class="bg-white border border-slate-200 rounded-lg p-12 text-center">
+            <i class="fas fa-inbox text-4xl text-slate-300 mb-3"></i>
+            <p class="text-slate-500 text-sm">{{ _('This survey has no questions yet.') }}</p>
+            <a href="{{ url_for('surveys.survey_builder', id=survey.id) }}" class="inline-block mt-4 text-blue-600 hover:text-blue-700 text-sm font-medium">
+                {{ _('Go to Builder') }} →
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- Submit Button (Disabled) -->
+        {% if survey.blocks|length > 0 %}
+        <div class="flex justify-end">
+            <div class="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium shadow-sm opacity-50 cursor-not-allowed">
+                <i class="fas fa-paper-plane"></i> {{ _('Submit Response') }}
+            </div>
+        </div>
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white mt-8">
+        <div class="max-w-3xl mx-auto px-6 py-4 text-center text-xs text-slate-400">
+            {{ _('Preview Mode') }} — {{ _('Powered by CCI SurveyHUB') }} — {{ _('Chamber of Commerce and Industry') }}
+        </div>
+    </footer>
+
+</body>
+</html>

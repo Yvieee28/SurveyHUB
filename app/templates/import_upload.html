@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold">{{ _('Import Responses') }}</h2>
+                    <p class="text-muted mb-0">{{ survey.title }}</p>
+                </div>
+                <a href="{{ url_for('surveys.survey_results', id=survey.id) }}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> {{ _('Back to Results') }}
+                </a>
+            </div>
+
+            {% if not importable %}
+            <!-- Warning: Survey not importable -->
+            <div class="card border-warning">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
+                        <i class="bi bi-exclamation-triangle-fill text-warning me-3 fs-4"></i>
+                        <div>
+                            <h5 class="card-title text-warning">{{ _('Import Not Available') }}</h5>
+                            <p class="card-text">{{ error_msg }}</p>
+                            <p class="text-muted small">{{ _('To import responses, the survey must be published and contain only multiple-choice questions.') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <!-- Import Form -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-upload"></i> {{ _('Upload Excel File') }}</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Step 1: Download Template -->
+                    <div class="mb-4 p-3 bg-light rounded">
+                        <h6><i class="bi bi-1-circle-fill text-primary"></i> {{ _('Download Template') }}</h6>
+                        <p class="text-muted mb-2">{{ _('Download the Excel template for this survey. Fill in the responses and upload the file.') }}</p>
+                        <a href="{{ url_for('surveys.import_template', id=survey.id) }}" class="btn btn-outline-primary">
+                            <i class="bi bi-download"></i> {{ _('Download Template') }}
+                        </a>
+                    </div>
+
+                    <!-- Step 2: Upload File -->
+                    <div class="mb-4">
+                        <h6><i class="bi bi-2-circle-fill text-primary"></i> {{ _('Upload Completed File') }}</h6>
+                        <form action="{{ url_for('surveys.import_validate', id=survey.id) }}" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="file" class="form-label">{{ _('Select Excel file') }}</label>
+                                <input type="file" class="form-control" id="file" name="file" accept=".xlsx,.xls" required>
+                                <div class="form-text">{{ _('Accepted formats: .xlsx, .xls') }}</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-upload"></i> {{ _('Validate & Preview') }}
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Warning Note -->
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle-fill"></i>
+                        <strong>{{ _('Important:') }}</strong> {{ _('This template matches the survey as of today. If questions have changed, re-download the template before importing.') }}
+                    </div>
+
+                    <!-- Instructions -->
+                    <div class="mt-4">
+                        <h6>{{ _('Instructions') }}</h6>
+                        <ul class="text-muted">
+                            <li>{{ _('Company Name and SIRET are required fields.') }}</li>
+                            <li>{{ _('Email is optional but must be valid if provided.') }}</li>
+                            <li>{{ _('Phone is optional but must be 10 digits if provided.') }}</li>
+                            <li>{{ _('Each question column must contain a valid choice from the list shown in the template comments.') }}</li>
+                            <li>{{ _('SIRET must be unique for each response (no duplicates).') }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

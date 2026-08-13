@@ -1,0 +1,360 @@
+/* =========================================================================
+   Global Root variables & Layout Foundations 
+   ========================================================================= */
+:root {
+    --bg-canvas: #f8fafc;
+    --panel-white: #ffffff;
+    --text-primary: #1e293b;
+    --text-muted: #64748b;
+    --border-soft: #e2e8f0;
+    --action-blue: #2563eb;
+    --action-blue-hover: #1d4ed8;
+    --bg-active-pill: #eff6ff;
+    --search-input-bg: #f1f5f9;
+}
+
+body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app-layout-wrapper {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* =========================================================================
+   Sidebar Styling Sheet
+   ========================================================================= */
+#sidebar-panel {
+    width: 260px;
+    min-width: 260px;
+    height: 100%;
+    background-color: var(--panel-white);
+    border-right: 1px solid var(--border-soft);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-branding {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.brand-icon-box {
+    background-color: var(--action-blue);
+    color: var(--panel-white);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.brand-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.brand-text-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+.sidebar-menu-links {
+    padding: 24px 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.15s ease-in-out;
+}
+
+.menu-item i {
+    font-size: 1.1rem;
+}
+
+.menu-item:hover {
+    color: var(--action-blue);
+    background-color: var(--search-input-bg);
+}
+
+.menu-item.active {
+    color: var(--action-blue);
+    background-color: var(--bg-active-pill);
+    font-weight: 600;
+}
+
+.sidebar-footer-profile {
+    padding: 20px 24px;
+    border-top: 1px solid var(--border-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.profile-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--action-blue);
+    color: var(--panel-white);
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-identity {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-fullname {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.user-role-title {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.logout-action-trigger {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.15s;
+}
+
+.logout-action-trigger:hover {
+    color: #ef4444;
+}
+
+/* =========================================================================
+   Main Workspace & Top Bar Layout Structure
+   ========================================================================= */
+#main-content-workspace {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#top-action-bar {
+    height: 70px;
+    min-height: 70px;
+    background-color: var(--panel-white);
+    border-bottom: 1px solid var(--border-soft);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.top-bar-left-nexus {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.project-identity-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.global-search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon-indicator {
+    position: absolute;
+    left: 16px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+.topbar-search-input {
+    width: 380px;
+    background-color: var(--search-input-bg);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 8px 16px 8px 42px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: all 0.15s;
+}
+
+.topbar-search-input:focus {
+    outline: none;
+    background-color: var(--panel-white);
+    border-color: var(--border-soft);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.top-bar-right-utilities {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.utility-icon-wrapper {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s;
+}
+
+.utility-icon-wrapper:hover {
+    color: var(--text-primary);
+}
+
+/* Red alert badge indicator dot */
+.notification-alert-active::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 6px;
+    height: 6px;
+    background-color: #ef4444;
+    border-radius: 50%;
+}
+
+.inner-workspace-container {
+    padding: 32px;
+    flex-grow: 1;
+}
+/* =========================================================================
+   Enterprise Glassmorphism Loader
+   ========================================================================= */
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Deep blur, subtle bright overlay */
+    background-color: rgba(248, 250, 252, 0.6); 
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.loader-glass-panel {
+    /* Apple-style glass panel */
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 25px 50px -12px rgba(15, 23, 42, 0.15),
+        0 0 0 1px rgba(226, 232, 240, 0.5);
+    border-radius: 24px;
+    padding: 40px 48px;
+    width: 320px;
+}
+
+/* The Data Wave 
+   Creates a silky, staggered equalizer effect representing data parsing
+*/
+.data-wave-container {
+    height: 40px; 
+}
+
+.data-bar {
+    width: 6px;
+    border-radius: 6px;
+    /* Premium gradient from your brand blue to a lighter cyan/blue */
+    background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    animation: premiumRipple 1.2s cubic-bezier(0.85, 0, 0.15, 1) infinite;
+    transform-origin: bottom;
+}
+
+/* Stagger the animation timing for the wave effect */
+.bar-1 { animation-delay: 0.0s; height: 10px; }
+.bar-2 { animation-delay: 0.1s; height: 20px; }
+.bar-3 { animation-delay: 0.2s; height: 35px; }
+.bar-4 { animation-delay: 0.3s; height: 20px; }
+.bar-5 { animation-delay: 0.4s; height: 10px; }
+
+@keyframes premiumRipple {
+    0%, 100% {
+        transform: scaleY(0.4);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scaleY(1.2);
+        opacity: 1;
+        background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+    }
+}

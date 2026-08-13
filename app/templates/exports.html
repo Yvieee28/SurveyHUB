@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">{{ _('Exports') }}</h2>
+    </div>
+    
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">{{ _('Anomalies Report') }}</h5>
+            <p class="text-muted">{{ _('Download a CSV report of all detected anomalies across all surveys.') }}</p>
+            <a href="{{ url_for('exports.export_anomalies') }}" class="btn btn-primary">
+                <i class="bi bi-download"></i> {{ _('Export Anomalies CSV') }}
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
