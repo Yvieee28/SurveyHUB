@@ -1,5 +1,5 @@
 /* =========================================================================
-   Global Root variables & Layout Foundations 
+   Global Root variables & Layout Foundations
    ========================================================================= */
 :root {
     --bg-canvas: #f8fafc;
@@ -13,18 +13,36 @@
     --search-input-bg: #f1f5f9;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     background-color: var(--bg-canvas);
     color: var(--text-primary);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 .app-layout-wrapper {
     display: flex;
-    width: 100vw;
+    width: 100%;
+    min-height: 100vh;
     height: 100vh;
     overflow: hidden;
 }
@@ -192,6 +210,7 @@ body {
     flex-direction: column;
     height: 100%;
     overflow-y: auto;
+    min-width: 0;
 }
 
 #top-action-bar {
@@ -212,6 +231,7 @@ body {
     display: flex;
     align-items: center;
     gap: 32px;
+    min-width: 0;
 }
 
 .project-identity-heading {
@@ -226,6 +246,7 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    min-width: 0;
 }
 
 .search-icon-indicator {
@@ -238,6 +259,7 @@ body {
 
 .topbar-search-input {
     width: 380px;
+    max-width: 100%;
     background-color: var(--search-input-bg);
     border: 1px solid transparent;
     border-radius: 8px;
@@ -275,7 +297,6 @@ body {
     color: var(--text-primary);
 }
 
-/* Red alert badge indicator dot */
 .notification-alert-active::after {
     content: '';
     position: absolute;
@@ -290,7 +311,9 @@ body {
 .inner-workspace-container {
     padding: 32px;
     flex-grow: 1;
+    min-width: 0;
 }
+
 /* =========================================================================
    Enterprise Glassmorphism Loader
    ========================================================================= */
@@ -300,8 +323,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* Deep blur, subtle bright overlay */
-    background-color: rgba(248, 250, 252, 0.6); 
+    background-color: rgba(248, 250, 252, 0.6);
     backdrop-filter: blur(12px) saturate(150%);
     -webkit-backdrop-filter: blur(12px) saturate(150%);
     z-index: 9999;
@@ -312,49 +334,407 @@ body {
 }
 
 .loader-glass-panel {
-    /* Apple-style glass panel */
     background: rgba(255, 255, 255, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 
+    box-shadow:
         0 25px 50px -12px rgba(15, 23, 42, 0.15),
         0 0 0 1px rgba(226, 232, 240, 0.5);
     border-radius: 24px;
     padding: 40px 48px;
     width: 320px;
+    max-width: calc(100% - 32px);
 }
 
-/* The Data Wave 
-   Creates a silky, staggered equalizer effect representing data parsing
-*/
 .data-wave-container {
-    height: 40px; 
+    height: 40px;
 }
 
 .data-bar {
     width: 6px;
     border-radius: 6px;
-    /* Premium gradient from your brand blue to a lighter cyan/blue */
     background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
     box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
     animation: premiumRipple 1.2s cubic-bezier(0.85, 0, 0.15, 1) infinite;
     transform-origin: bottom;
 }
 
-/* Stagger the animation timing for the wave effect */
-.bar-1 { animation-delay: 0.0s; height: 10px; }
-.bar-2 { animation-delay: 0.1s; height: 20px; }
-.bar-3 { animation-delay: 0.2s; height: 35px; }
-.bar-4 { animation-delay: 0.3s; height: 20px; }
-.bar-5 { animation-delay: 0.4s; height: 10px; }
+.bar-1 {
+    animation-delay: 0s;
+    height: 10px;
+}
+
+.bar-2 {
+    animation-delay: 0.1s;
+    height: 20px;
+}
+
+.bar-3 {
+    animation-delay: 0.2s;
+    height: 35px;
+}
+
+.bar-4 {
+    animation-delay: 0.3s;
+    height: 20px;
+}
+
+.bar-5 {
+    animation-delay: 0.4s;
+    height: 10px;
+}
 
 @keyframes premiumRipple {
-    0%, 100% {
+    0%,
+    100% {
         transform: scaleY(0.4);
         opacity: 0.5;
     }
+
     50% {
         transform: scaleY(1.2);
         opacity: 1;
         background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+    }
+}
+
+/* =========================================================================
+   General Responsive Protection
+   ========================================================================= */
+table {
+    max-width: 100%;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+input,
+textarea,
+select,
+button {
+    max-width: 100%;
+}
+
+iframe,
+video,
+canvas,
+svg {
+    max-width: 100%;
+}
+
+/* =========================================================================
+   SMALL LAPTOPS / LARGE TABLETS
+   ========================================================================= */
+@media (max-width: 1200px) {
+    #sidebar-panel {
+        width: 230px;
+        min-width: 230px;
+    }
+
+    .topbar-search-input {
+        width: 300px;
+    }
+
+    #top-action-bar {
+        padding: 0 24px;
+    }
+
+    .top-bar-left-nexus {
+        gap: 20px;
+    }
+
+    .inner-workspace-container {
+        padding: 24px;
+    }
+}
+
+/* =========================================================================
+   TABLETS
+   ========================================================================= */
+@media (max-width: 992px) {
+    #sidebar-panel {
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .sidebar-branding {
+        padding: 20px 16px;
+    }
+
+    .sidebar-menu-links {
+        padding: 18px 12px;
+    }
+
+    .sidebar-footer-profile {
+        padding: 16px;
+    }
+
+    .menu-item {
+        padding: 10px 12px;
+        font-size: 0.87rem;
+        gap: 9px;
+    }
+
+    .brand-title {
+        font-size: 1rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.65rem;
+    }
+
+    #top-action-bar {
+        padding: 0 18px;
+    }
+
+    .top-bar-left-nexus {
+        gap: 14px;
+    }
+
+    .project-identity-heading {
+        font-size: 1.05rem;
+    }
+
+    .topbar-search-input {
+        width: 220px;
+    }
+
+    .top-bar-right-utilities {
+        gap: 12px;
+    }
+
+    .inner-workspace-container {
+        padding: 20px;
+    }
+}
+
+/* =========================================================================
+   MOBILE / SMALL TABLETS
+   ========================================================================= */
+@media (max-width: 768px) {
+    .app-layout-wrapper {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    #sidebar-panel {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-soft);
+        position: relative;
+        z-index: 200;
+    }
+
+    .sidebar-branding {
+        padding: 12px 16px;
+    }
+
+    .brand-icon-box,
+    .brand-logo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .brand-title {
+        font-size: 1rem;
+    }
+
+    .sidebar-menu-links {
+        padding: 8px 10px 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        scrollbar-width: none;
+        flex-grow: 0;
+    }
+
+    .sidebar-menu-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .menu-item {
+        flex: 0 0 auto;
+        padding: 8px 11px;
+        font-size: 0.8rem;
+    }
+
+    .sidebar-footer-profile {
+        display: none;
+    }
+
+    #main-content-workspace {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+
+    #top-action-bar {
+        height: auto;
+        min-height: 60px;
+        padding: 10px 14px;
+        flex-wrap: wrap;
+        gap: 10px;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-bar-left-nexus {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .project-identity-heading {
+        width: 100%;
+        font-size: 1rem;
+        white-space: normal;
+        padding-right: 90px;
+    }
+
+    .global-search-container {
+        width: 100%;
+    }
+
+    .topbar-search-input {
+        width: 100%;
+    }
+
+    .top-bar-right-utilities {
+        position: absolute;
+        top: 18px;
+        right: 14px;
+        gap: 10px;
+    }
+
+    .inner-workspace-container {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    [class*="col-"] {
+        min-width: 0;
+    }
+
+    .card {
+        max-width: 100%;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    .modal-dialog {
+        width: auto;
+        max-width: calc(100% - 20px);
+        margin: 10px;
+    }
+
+    .loader-glass-panel {
+        width: calc(100% - 32px);
+        padding: 30px 24px;
+    }
+}
+
+/* =========================================================================
+   PHONES
+   ========================================================================= */
+@media (max-width: 576px) {
+    .brand-subtitle {
+        display: none;
+    }
+
+    .sidebar-branding {
+        padding: 10px 12px;
+    }
+
+    .sidebar-menu-links {
+        padding: 6px 8px 9px;
+    }
+
+    .menu-item {
+        padding: 8px 9px;
+        font-size: 0.76rem;
+        gap: 6px;
+    }
+
+    #top-action-bar {
+        padding: 9px 12px;
+    }
+
+    .project-identity-heading {
+        font-size: 0.95rem;
+    }
+
+    .topbar-search-input {
+        font-size: 0.85rem;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    .inner-workspace-container {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 1.45rem;
+    }
+
+    h2 {
+        font-size: 1.22rem;
+    }
+
+    h3 {
+        font-size: 1.08rem;
+    }
+
+    p,
+    input,
+    select,
+    textarea,
+    button {
+        font-size: 0.9rem;
+    }
+
+    .loader-glass-panel {
+        padding: 24px 18px;
+        border-radius: 18px;
+    }
+}
+
+/* =========================================================================
+   VERY SMALL PHONES
+   ========================================================================= */
+@media (max-width: 380px) {
+    .brand-title {
+        font-size: 0.9rem;
+    }
+
+    .menu-item {
+        font-size: 0.72rem;
+        padding: 7px 8px;
+    }
+
+    .project-identity-heading {
+        font-size: 0.9rem;
+    }
+
+    .inner-workspace-container {
+        padding: 10px;
     }
 }

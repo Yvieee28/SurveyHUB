@@ -3,18 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>SurveyHUB</title>
-    <!-- Clean Google Font to match Figma's modern UI type -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS Framework -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons Font Library -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <!-- Main Style Overrides Sheet -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v=4">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/main.css') }}?v=5"
+    >
+
     {% block extra_css %}{% endblock %}
+
     <style>
-        /* Toast Notifications */
+        /* ================================================================
+           TOAST NOTIFICATIONS
+           ================================================================ */
+
         .custom-toast-container {
             position: fixed;
             top: 20px;
@@ -24,25 +42,51 @@
             flex-direction: column;
             gap: 10px;
         }
+
         .custom-toast {
             background: #ffffff;
             border-radius: 10px;
             padding: 14px 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+
             display: flex;
             align-items: center;
             gap: 10px;
+
             min-width: 280px;
             max-width: 360px;
+
             font-size: 13px;
             font-weight: 500;
+
             animation: slideInToast 0.4s ease-out;
             border-left: 4px solid;
         }
-        .custom-toast.danger { border-left-color: #ef4444; background: #fee2e2; color: #991b1b; }
-        .custom-toast.success { border-left-color: #10b981; background: #d1fae5; color: #065f46; }
-        .custom-toast.warning { border-left-color: #f59e0b; background: #fef3c7; color: #92400e; }
-        .custom-toast.info { border-left-color: #3b82f6; background: #dbeafe; color: #1e40af; }
+
+        .custom-toast.danger {
+            border-left-color: #ef4444;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .custom-toast.success {
+            border-left-color: #10b981;
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .custom-toast.warning {
+            border-left-color: #f59e0b;
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .custom-toast.info {
+            border-left-color: #3b82f6;
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
         .custom-toast-close {
             margin-left: auto;
             cursor: pointer;
@@ -50,434 +94,1162 @@
             font-size: 14px;
             transition: color 0.2s;
         }
-        .custom-toast-close:hover { color: #374151; }
+
+        .custom-toast-close:hover {
+            color: #374151;
+        }
+
         @keyframes slideInToast {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
+
         @keyframes fadeOutToast {
-            from { opacity: 1; transform: translateX(0); }
-            to { opacity: 0; transform: translateX(100%); }
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
         }
+
         .custom-toast.hiding {
             animation: fadeOutToast 0.3s ease-in forwards;
         }
-    </style>
-</head>
-<body>
 
-    <div class="app-layout-wrapper">
-        
-        <!-- =========================================================
-             SIDEBAR COMPONENT 
-             ========================================================= -->
-        <nav id="sidebar-panel">
-            <!-- Top Branding Frame -->
-            <div class="sidebar-branding">
-                <img src="{{ url_for('static', filename='assets/logo.jpeg') }}" alt="SurveyHUB Logo" class="brand-logo">
-                <div class="brand-text-box">
-                    <span class="brand-title">SurveyHUB</span>
-                    <span class="brand-subtitle">CHAMBER OF COMMERCE</span>
-                </div>
-            </div>
 
-            <!-- Main Navigation Links -->
-            <div class="sidebar-menu-links">
-                <a href="/" class="menu-item {{ 'active' if request.endpoint == 'dashboard.index' else '' }}">
-                    <i class="bi bi-grid-1x2-fill"></i> {{ _('Dashboard') }}
-                </a>
-                <a href="/surveys" class="menu-item {{ 'active' if request.endpoint == 'surveys.survey_list' else '' }}">
-                    <i class="bi bi-card-text"></i> {{ _('Surveys') }}
-                </a>
-                <a href="/anomalies" class="menu-item {{ 'active' if request.endpoint == 'dashboard.anomalies' else '' }}">
-                    <i class="bi bi-exclamation-triangle-fill"></i> {{ _('Anomalies') }}
-                </a>
-                <a href="/exports" class="menu-item {{ 'active' if request.endpoint == 'exports.export_index' else '' }}">
-                    <i class="bi bi-download"></i> {{ _('Exports') }}
-                </a>
-            </div>
+        /* ================================================================
+           AI CHAT
+           ================================================================ */
 
-            <!-- Bottom User Profile Card Frame -->
-            <div class="sidebar-footer-profile">
-                <form action="{{ url_for('language.toggle_language') }}" method="POST" style="margin: 0;">
-                    <button type="submit" class="btn btn-sm btn-primary w-100" title="{{ _('Switch language') }}" style="font-size: 12px; padding: 6px 12px;">
-                        <i class="bi bi-globe2"></i> {{ _('Switch to') }} {{ 'EN' if session.get('language', 'fr') == 'fr' else 'FR' }}
-                    </button>
-                </form>
-                <div class="profile-meta-row">
-                    <div class="profile-avatar">{{ current_user.name[:2]|upper if current_user.is_authenticated else 'AU' }}</div>
-                    <div class="profile-identity">
-                        <span class="user-fullname">{{ current_user.name if current_user.is_authenticated else _('Admin User') }}</span>
-                        <span class="user-role-title">{{ current_user.role|title if current_user.is_authenticated else _('System Overseer') }}</span>
-                    </div>
-                </div>
-                <a href="{{ url_for('auth.logout') }}" class="logout-action-trigger">
-                    <i class="bi bi-box-arrow-left"></i> {{ _('Logout') }}
-                </a>
-            </div>
-        </nav>
-
-        <!-- =========================================================
-             CONTENT WORKSPACE WRAPPER
-             ========================================================= -->
-        <div id="main-content-workspace">
-            
-            <!-- Dynamic Sub-page Mounting Point -->
-            <main class="inner-workspace-container">
-                {% block content %}{% endblock %}
-            </main>
-            
-        </div>
-    </div>
-
-    <!-- Global Loading Spinner -->
-    {% include "components/_spinner.html" %}
-
-    <!-- Bootstrap Core Bundle JS Dependency -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Main Application Script -->
-    <script src="{{ url_for('static', filename='js/main.js') }}?v=4"></script>
-    {% block extra_js %}{% endblock %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Toast notifications
-            const flashMessages = [
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            {category: {{ category|tojson }}, message: {{ message|tojson }}}{% if not loop.last %},{% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-            ];
-            console.log('Flash messages:', flashMessages);
-
-            function showToast(category, message) {
-                console.log('Showing toast:', category, message);
-                const container = document.getElementById('custom-toast-container');
-                if (!container) {
-                    console.error('Toast container not found');
-                    return;
-                }
-                const toast = document.createElement('div');
-                toast.className = `custom-toast ${category}`;
-                const iconMap = {
-                    'success': 'bi-check-circle-fill',
-                    'danger': 'bi-exclamation-circle-fill',
-                    'warning': 'bi-exclamation-triangle-fill',
-                    'info': 'bi-info-circle-fill'
-                };
-                toast.innerHTML = `
-                    <i class="bi ${iconMap[category] || 'bi-info-circle-fill'}"></i>
-                    <span>${message}</span>
-                    <i class="bi bi-x-lg custom-toast-close" onclick="this.parentElement.classList.add('hiding'); setTimeout(() => this.parentElement.remove(), 300);"></i>
-                `;
-                container.appendChild(toast);
-                setTimeout(() => {
-                    toast.classList.add('hiding');
-                    setTimeout(() => toast.remove(), 300);
-                }, 4000);
-            }
-
-            if (flashMessages.length > 0) {
-                flashMessages.forEach(f => showToast(f.category, f.message));
-            } else {
-                console.log('No flash messages to display');
-            }
-
-            // Confirm Modal Helper
-            window.confirmAction = function(title, message, callback, buttonText, buttonClass) {
-                document.getElementById('confirmModalTitle').textContent = title || '{{ _("Confirm Action") }}';
-                document.getElementById('confirmModalBody').textContent = message || '{{ _("Are you sure?") }}';
-                const actionBtn = document.getElementById('confirmModalAction');
-                actionBtn.textContent = buttonText || '{{ _("Confirm") }}';
-                actionBtn.className = 'btn ' + (buttonClass || 'btn-danger');
-                actionBtn.onclick = function () {
-                    callback();
-                    bootstrap.Modal.getInstance(document.getElementById('confirmModal')).hide();
-                };
-                new bootstrap.Modal(document.getElementById('confirmModal')).show();
-            };
-        });
-    </script>
-
-    <!-- Confirm Modal -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmModalTitle">{{ _('Confirm Action') }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="confirmModalBody">
-                    {{ _('Are you sure you want to proceed?') }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
-                    <button type="button" class="btn btn-danger" id="confirmModalAction">{{ _('Confirm') }}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Container (moved to end for highest stacking) -->
-    <div class="custom-toast-container" id="custom-toast-container"></div>
-
-    <!-- AI Assistant Chat Widget -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <style>
         .ai-chat-button {
             position: fixed;
+
             bottom: 24px;
             right: 24px;
+
             width: 56px;
             height: 56px;
+
             border-radius: 50%;
+
             background: #3b82f6;
             color: white;
+
             border: none;
+
             cursor: pointer;
+
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             font-size: 24px;
+
             z-index: 9999;
+
             transition: all 0.3s ease;
         }
+
         .ai-chat-button:hover {
             background: #2563eb;
             transform: scale(1.05);
         }
+
         .ai-chat-panel {
             position: fixed;
+
             bottom: 96px;
             right: 24px;
+
             width: 380px;
+            max-width: calc(100vw - 48px);
+
             height: 500px;
+            max-height: calc(100vh - 130px);
+
             background: white;
+
             border-radius: 12px;
+
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
             display: none;
             flex-direction: column;
+
             z-index: 9999;
+
             overflow: hidden;
         }
+
         .ai-chat-panel.active {
             display: flex;
             animation: slideUp 0.3s ease;
         }
+
         @keyframes slideUp {
             from {
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         .ai-chat-header {
             background: #3b82f6;
             color: white;
+
             padding: 16px;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .ai-chat-header h3 {
             margin: 0;
+
             font-size: 16px;
             font-weight: 600;
         }
+
         .ai-chat-close {
             background: none;
+
             border: none;
+
             color: white;
+
             cursor: pointer;
+
             font-size: 20px;
+
             padding: 0;
+
             width: 24px;
             height: 24px;
+
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .ai-chat-messages {
             flex: 1;
+
             overflow-y: auto;
             overflow-x: hidden;
+
             padding: 16px;
+
             display: flex;
             flex-direction: column;
+
             gap: 12px;
         }
-        .ai-message, .user-message {
+
+        .ai-message,
+        .user-message {
             padding: 10px 14px;
+
             border-radius: 12px;
+
             max-width: 85%;
+
             font-size: 14px;
             line-height: 1.5;
+
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
+
         .ai-message {
             background: #f1f5f9;
             color: #1e293b;
+
             align-self: flex-start;
+
             border-bottom-left-radius: 4px;
         }
-        .ai-message ul, .ai-message ol {
-            margin: 4px 0;
-            padding-left: 20px;
-        }
-        .ai-message li {
-            margin: 2px 0;
-        }
-        .ai-message strong {
-            font-weight: 600;
-        }
-        .ai-message code {
-            background: #e2e8f0;
-            padding: 1px 4px;
-            border-radius: 3px;
-            font-size: 13px;
-        }
-        .ai-message p {
-            margin: 4px 0;
-        }
-        .ai-message p:first-child {
-            margin-top: 0;
-        }
-        .ai-message p:last-child {
-            margin-bottom: 0;
-        }
+
         .user-message {
             background: #3b82f6;
             color: white;
+
             align-self: flex-end;
+
             border-bottom-right-radius: 4px;
         }
+
+        .ai-message ul,
+        .ai-message ol {
+            margin: 4px 0;
+            padding-left: 20px;
+        }
+
+        .ai-message li {
+            margin: 2px 0;
+        }
+
+        .ai-message strong {
+            font-weight: 600;
+        }
+
+        .ai-message code {
+            background: #e2e8f0;
+
+            padding: 1px 4px;
+
+            border-radius: 3px;
+
+            font-size: 13px;
+        }
+
+        .ai-message p {
+            margin: 4px 0;
+        }
+
+        .ai-message p:first-child {
+            margin-top: 0;
+        }
+
+        .ai-message p:last-child {
+            margin-bottom: 0;
+        }
+
         .ai-chat-input-container {
             border-top: 1px solid #e2e8f0;
+
             padding: 12px;
+
             display: flex;
+
             gap: 8px;
         }
+
         .ai-chat-input {
             flex: 1;
+
+            min-width: 0;
+
             border: 1px solid #e2e8f0;
+
             border-radius: 8px;
+
             padding: 8px 12px;
+
             font-size: 14px;
+
             outline: none;
         }
+
         .ai-chat-input:focus {
             border-color: #3b82f6;
         }
+
         .ai-chat-send {
             background: #3b82f6;
             color: white;
+
             border: none;
+
             border-radius: 8px;
+
             padding: 8px 16px;
+
             cursor: pointer;
+
             font-size: 14px;
             font-weight: 500;
+
+            flex-shrink: 0;
         }
+
         .ai-chat-send:hover {
             background: #2563eb;
         }
+
         .ai-chat-send:disabled {
             background: #94a3b8;
             cursor: not-allowed;
         }
+
+
+        /* ================================================================
+           RESPONSIVE TABLET
+           ================================================================ */
+
+        @media (max-width: 992px) {
+
+            .custom-toast-container {
+                right: 14px;
+            }
+
+            .ai-chat-panel {
+                width: 360px;
+            }
+        }
+
+
+        /* ================================================================
+           RESPONSIVE PHONE / SMALL TABLET
+           ================================================================ */
+
+        @media (max-width: 768px) {
+
+            .custom-toast-container {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+
+                width: auto;
+            }
+
+            .custom-toast {
+                width: 100%;
+
+                min-width: 0;
+                max-width: none;
+            }
+
+            .ai-chat-button {
+                width: 50px;
+                height: 50px;
+
+                right: 16px;
+                bottom: 16px;
+
+                font-size: 21px;
+            }
+
+            .ai-chat-panel {
+                width: calc(100vw - 24px);
+                max-width: none;
+
+                height: min(500px, calc(100vh - 100px));
+                max-height: calc(100vh - 100px);
+
+                left: 12px;
+                right: 12px;
+
+                bottom: 78px;
+
+                border-radius: 12px;
+            }
+
+            .ai-chat-messages {
+                padding: 12px;
+            }
+
+            .ai-message,
+            .user-message {
+                max-width: 90%;
+
+                font-size: 13px;
+            }
+
+            .ai-chat-input-container {
+                padding: 10px;
+            }
+
+            .ai-chat-input {
+                width: 100%;
+
+                min-width: 0;
+            }
+
+            .ai-chat-send {
+                padding: 8px 12px;
+            }
+        }
+
+
+        /* ================================================================
+           SMALL PHONES
+           ================================================================ */
+
+        @media (max-width: 480px) {
+
+            .ai-chat-panel {
+                width: calc(100vw - 16px);
+
+                left: 8px;
+                right: 8px;
+
+                bottom: 74px;
+
+                height: calc(100vh - 90px);
+                max-height: 600px;
+            }
+
+            .ai-chat-header {
+                padding: 12px;
+            }
+
+            .ai-chat-header h3 {
+                font-size: 14px;
+            }
+
+            .ai-chat-input-container {
+                gap: 6px;
+                padding: 8px;
+            }
+
+            .ai-chat-input {
+                font-size: 13px;
+            }
+
+            .ai-chat-send {
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+        }
+
     </style>
+</head>
 
-    <button class="ai-chat-button" onclick="toggleChatPanel()" title="{{ _('AI Assistant') }}">
-        <i class="bi bi-chat-dots-fill"></i>
-    </button>
+<body>
 
-    <div class="ai-chat-panel" id="aiChatPanel">
-        <div class="ai-chat-header">
-            <h3><i class="bi bi-robot"></i> {{ _('AI Assistant') }}</h3>
-            <button class="ai-chat-close" onclick="toggleChatPanel()">
-                <i class="bi bi-x-lg"></i>
-            </button>
-        </div>
-        <div class="ai-chat-messages" id="aiChatMessages">
-            <div class="ai-message">
-                {{ _("Hello! I'm your SurveyHUB assistant. How can I help you today?") }}
+    <div class="app-layout-wrapper">
+
+        <!-- =============================================================
+             SIDEBAR
+             ============================================================= -->
+        <nav id="sidebar-panel">
+
+            <div class="sidebar-branding">
+
+                <img
+                    src="{{ url_for('static', filename='assets/logo.jpeg') }}"
+                    alt="SurveyHUB Logo"
+                    class="brand-logo"
+                >
+
+                <div class="brand-text-box">
+
+                    <span class="brand-title">
+                        SurveyHUB
+                    </span>
+
+                    <span class="brand-subtitle">
+                        SURVEY PLATFORM
+                    </span>
+
+                </div>
+
             </div>
+
+
+            <!-- Navigation -->
+            <div class="sidebar-menu-links">
+
+                <a
+                    href="/"
+                    class="menu-item {{ 'active' if request.endpoint == 'dashboard.index' else '' }}"
+                >
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    {{ _('Dashboard') }}
+                </a>
+
+
+                <a
+                    href="/surveys"
+                    class="menu-item {{ 'active' if request.endpoint == 'surveys.survey_list' else '' }}"
+                >
+                    <i class="bi bi-card-text"></i>
+                    {{ _('Surveys') }}
+                </a>
+
+
+                <a
+                    href="/anomalies"
+                    class="menu-item {{ 'active' if request.endpoint == 'dashboard.anomalies' else '' }}"
+                >
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    {{ _('Anomalies') }}
+                </a>
+
+
+                <a
+                    href="/exports"
+                    class="menu-item {{ 'active' if request.endpoint == 'exports.export_index' else '' }}"
+                >
+                    <i class="bi bi-download"></i>
+                    {{ _('Exports') }}
+                </a>
+
+            </div>
+
+
+            <!-- User Profile -->
+            <div class="sidebar-footer-profile">
+
+                <form
+                    action="{{ url_for('language.toggle_language') }}"
+                    method="POST"
+                    style="margin: 0;"
+                >
+
+                    <button
+                        type="submit"
+                        class="btn btn-sm btn-primary w-100"
+                        title="{{ _('Switch language') }}"
+                        style="font-size: 12px; padding: 6px 12px;"
+                    >
+                        <i class="bi bi-globe2"></i>
+
+                        {{ _('Switch to') }}
+                        {{ 'EN' if session.get('language', 'fr') == 'fr' else 'FR' }}
+
+                    </button>
+
+                </form>
+
+
+                <div class="profile-meta-row">
+
+                    <div class="profile-avatar">
+
+                        {{
+                            current_user.name[:2]|upper
+                            if current_user.is_authenticated
+                            else 'AU'
+                        }}
+
+                    </div>
+
+
+                    <div class="profile-identity">
+
+                        <span class="user-fullname">
+
+                            {{
+                                current_user.name
+                                if current_user.is_authenticated
+                                else _('Admin User')
+                            }}
+
+                        </span>
+
+
+                        <span class="user-role-title">
+
+                            {{
+                                current_user.role|title
+                                if current_user.is_authenticated
+                                else _('System Overseer')
+                            }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('auth.logout') }}"
+                    class="logout-action-trigger"
+                >
+                    <i class="bi bi-box-arrow-left"></i>
+
+                    {{ _('Logout') }}
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- =============================================================
+             MAIN CONTENT
+             ============================================================= -->
+
+        <div id="main-content-workspace">
+
+            <main class="inner-workspace-container">
+
+                {% block content %}
+                {% endblock %}
+
+            </main>
+
         </div>
-        <div class="ai-chat-input-container">
-            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="{{ _('Ask me anything about SurveyHUB...') }}" onkeypress="handleChatKeyPress(event)">
-            <button class="ai-chat-send" id="aiChatSend" onclick="sendMessage()">{{ _('Send') }}</button>
-        </div>
+
     </div>
 
+
+    <!-- Loading spinner -->
+    {% include "components/_spinner.html" %}
+
+
+    <!-- Bootstrap -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- Main JS -->
+    <script
+        src="{{ url_for('static', filename='js/main.js') }}?v=5">
+    </script>
+
+
+    {% block extra_js %}
+    {% endblock %}
+
+
+    <!-- =============================================================
+         TOAST SCRIPT
+         ============================================================= -->
+
     <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const flashMessages = [
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+
+                    {% if messages %}
+
+                        {% for category, message in messages %}
+
+                            {
+                                category: {{ category|tojson }},
+                                message: {{ message|tojson }}
+                            }
+
+                            {% if not loop.last %}
+                                ,
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                {% endwith %}
+
+            ];
+
+
+            function showToast(category, message) {
+
+                const container =
+                    document.getElementById('custom-toast-container');
+
+                if (!container) {
+                    return;
+                }
+
+
+                const toast =
+                    document.createElement('div');
+
+
+                toast.className =
+                    `custom-toast ${category}`;
+
+
+                const iconMap = {
+
+                    success: 'bi-check-circle-fill',
+
+                    danger: 'bi-exclamation-circle-fill',
+
+                    warning: 'bi-exclamation-triangle-fill',
+
+                    info: 'bi-info-circle-fill'
+
+                };
+
+
+                toast.innerHTML = `
+
+                    <i class="bi ${iconMap[category] || 'bi-info-circle-fill'}"></i>
+
+                    <span>${message}</span>
+
+                    <i
+                        class="bi bi-x-lg custom-toast-close"
+                        onclick="
+                            this.parentElement.classList.add('hiding');
+                            setTimeout(
+                                () => this.parentElement.remove(),
+                                300
+                            );
+                        "
+                    ></i>
+
+                `;
+
+
+                container.appendChild(toast);
+
+
+                setTimeout(() => {
+
+                    toast.classList.add('hiding');
+
+
+                    setTimeout(() => {
+
+                        toast.remove();
+
+                    }, 300);
+
+                }, 4000);
+
+            }
+
+
+            flashMessages.forEach(function (flash) {
+
+                showToast(
+                    flash.category,
+                    flash.message
+                );
+
+            });
+
+
+            window.confirmAction = function (
+                title,
+                message,
+                callback,
+                buttonText,
+                buttonClass
+            ) {
+
+                document
+                    .getElementById('confirmModalTitle')
+                    .textContent =
+                        title ||
+                        '{{ _("Confirm Action") }}';
+
+
+                document
+                    .getElementById('confirmModalBody')
+                    .textContent =
+                        message ||
+                        '{{ _("Are you sure?") }}';
+
+
+                const actionBtn =
+                    document.getElementById('confirmModalAction');
+
+
+                actionBtn.textContent =
+                    buttonText ||
+                    '{{ _("Confirm") }}';
+
+
+                actionBtn.className =
+                    'btn ' +
+                    (buttonClass || 'btn-danger');
+
+
+                actionBtn.onclick = function () {
+
+                    callback();
+
+
+                    bootstrap.Modal
+                        .getInstance(
+                            document.getElementById('confirmModal')
+                        )
+                        .hide();
+
+                };
+
+
+                new bootstrap.Modal(
+                    document.getElementById('confirmModal')
+                ).show();
+
+            };
+
+        });
+
+    </script>
+
+
+    <!-- =============================================================
+         CONFIRM MODAL
+         ============================================================= -->
+
+    <div
+        class="modal fade"
+        id="confirmModal"
+        tabindex="-1"
+        aria-hidden="true"
+    >
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5
+                        class="modal-title"
+                        id="confirmModalTitle"
+                    >
+                        {{ _('Confirm Action') }}
+                    </h5>
+
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="modal-body"
+                    id="confirmModalBody"
+                >
+
+                    {{ _('Are you sure you want to proceed?') }}
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        {{ _('Cancel') }}
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        id="confirmModalAction"
+                    >
+                        {{ _('Confirm') }}
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Toast container -->
+    <div
+        class="custom-toast-container"
+        id="custom-toast-container">
+    </div>
+
+
+    <!-- =============================================================
+         AI ASSISTANT
+         ============================================================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
+    </script>
+
+
+    <button
+        class="ai-chat-button"
+        onclick="toggleChatPanel()"
+        title="{{ _('AI Assistant') }}"
+        aria-label="{{ _('Open AI Assistant') }}"
+    >
+
+        <i class="bi bi-chat-dots-fill"></i>
+
+    </button>
+
+
+    <div
+        class="ai-chat-panel"
+        id="aiChatPanel"
+    >
+
+        <div class="ai-chat-header">
+
+            <h3>
+
+                <i class="bi bi-robot"></i>
+
+                {{ _('AI Assistant') }}
+
+            </h3>
+
+
+            <button
+                class="ai-chat-close"
+                onclick="toggleChatPanel()"
+                aria-label="{{ _('Close') }}"
+            >
+
+                <i class="bi bi-x-lg"></i>
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="ai-chat-messages"
+            id="aiChatMessages"
+        >
+
+            <div class="ai-message">
+
+                {{
+                    _("Hello! I'm your SurveyHUB assistant. How can I help you today?")
+                }}
+
+            </div>
+
+        </div>
+
+
+        <div class="ai-chat-input-container">
+
+            <input
+                type="text"
+                class="ai-chat-input"
+                id="aiChatInput"
+                placeholder="{{ _('Ask me anything about SurveyHUB...') }}"
+                onkeypress="handleChatKeyPress(event)"
+            >
+
+
+            <button
+                class="ai-chat-send"
+                id="aiChatSend"
+                onclick="sendMessage()"
+            >
+
+                {{ _('Send') }}
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =============================================================
+         AI CHAT SCRIPT
+         ============================================================= -->
+
+    <script>
+
         function toggleChatPanel() {
-            const panel = document.getElementById('aiChatPanel');
+
+            const panel =
+                document.getElementById('aiChatPanel');
+
             panel.classList.toggle('active');
+
+
+            if (panel.classList.contains('active')) {
+
+                setTimeout(() => {
+
+                    document
+                        .getElementById('aiChatInput')
+                        .focus();
+
+                }, 200);
+
+            }
+
         }
+
 
         function handleChatKeyPress(event) {
+
             if (event.key === 'Enter') {
+
                 sendMessage();
+
             }
+
         }
+
 
         async function sendMessage() {
-            const input = document.getElementById('aiChatInput');
-            const sendBtn = document.getElementById('aiChatSend');
-            const messages = document.getElementById('aiChatMessages');
-            
-            const message = input.value.trim();
-            if (!message) return;
 
-            input.value = '';
-            sendBtn.disabled = true;
+            const input =
+                document.getElementById('aiChatInput');
 
-            const userMsg = document.createElement('div');
-            userMsg.className = 'user-message';
-            userMsg.textContent = message;
-            messages.appendChild(userMsg);
 
-            const loadingMsg = document.createElement('div');
-            loadingMsg.className = 'ai-message';
-            loadingMsg.textContent = '{{ _("Thinking...") }}';
-            messages.appendChild(loadingMsg);
-            messages.scrollTop = messages.scrollHeight;
+            const sendBtn =
+                document.getElementById('aiChatSend');
 
-            try {
-                const response = await fetch('/assistant/ask', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ message: message })
-                });
 
-                const data = await response.json();
-                loadingMsg.remove();
+            const messages =
+                document.getElementById('aiChatMessages');
 
-                const aiMsg = document.createElement('div');
-                aiMsg.className = 'ai-message';
-                aiMsg.innerHTML = marked.parse(data.response || data.error || '{{ _("Sorry, I could not process your request.") }}');
-                messages.appendChild(aiMsg);
-            } catch (error) {
-                loadingMsg.remove();
-                const errorMsg = document.createElement('div');
-                errorMsg.className = 'ai-message';
-                errorMsg.textContent = '{{ _("Sorry, an error occurred. Please try again.") }}';
-                messages.appendChild(errorMsg);
+
+            const message =
+                input.value.trim();
+
+
+            if (!message) {
+                return;
             }
 
+
+            input.value = '';
+
+            sendBtn.disabled = true;
+
+
+            const userMsg =
+                document.createElement('div');
+
+
+            userMsg.className =
+                'user-message';
+
+
+            userMsg.textContent =
+                message;
+
+
+            messages.appendChild(userMsg);
+
+
+            const loadingMsg =
+                document.createElement('div');
+
+
+            loadingMsg.className =
+                'ai-message';
+
+
+            loadingMsg.textContent =
+                '{{ _("Thinking...") }}';
+
+
+            messages.appendChild(loadingMsg);
+
+
+            messages.scrollTop =
+                messages.scrollHeight;
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        '/assistant/ask',
+                        {
+
+                            method: 'POST',
+
+                            headers: {
+
+                                'Content-Type':
+                                    'application/json'
+
+                            },
+
+                            body: JSON.stringify({
+
+                                message: message
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                loadingMsg.remove();
+
+
+                const aiMsg =
+                    document.createElement('div');
+
+
+                aiMsg.className =
+                    'ai-message';
+
+
+                aiMsg.innerHTML =
+                    marked.parse(
+                        data.response ||
+                        data.error ||
+                        '{{ _("Sorry, I could not process your request.") }}'
+                    );
+
+
+                messages.appendChild(aiMsg);
+
+
+            } catch (error) {
+
+                loadingMsg.remove();
+
+
+                const errorMsg =
+                    document.createElement('div');
+
+
+                errorMsg.className =
+                    'ai-message';
+
+
+                errorMsg.textContent =
+                    '{{ _("Sorry, an error occurred. Please try again.") }}';
+
+
+                messages.appendChild(errorMsg);
+
+            }
+
+
             sendBtn.disabled = false;
-            messages.scrollTop = messages.scrollHeight;
+
+
+            messages.scrollTop =
+                messages.scrollHeight;
+
+
             input.focus();
+
         }
+
     </script>
+
 </body>
 </html>
