@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCI SurveyHUB - {{ _('Login & Register') }}</title>
+    <title>SurveyHUB - {{ _('Login & Register') }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -468,7 +468,7 @@
             
             <div class="logo">
                 <i class="fa-solid fa-network-wired logo-icon"></i>
-                <span>CCI SurveyHUB</span>
+                <span>SurveyHUB</span>
             </div>
 
             <div class="forms-container">
@@ -506,7 +506,7 @@
 
                 <div class="form-view {% if view == 'signup' %}active{% endif %}" id="signup-form">
                     <h1>{{ _('Create an Account') }}</h1>
-                    <p class="subtitle">{{ _('Join CCI SurveyHUB to start collecting data.') }}</p>
+                    <p class="subtitle">{{ _('Join SurveyHUB to start collecting data.') }}</p>
 
                     <form method="POST" action="{{ url_for('auth.register') }}">
                         <div class="form-group">

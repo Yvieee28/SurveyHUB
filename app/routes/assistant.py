@@ -10,9 +10,9 @@ load_dotenv()
 
 assistant = Blueprint('assistant', __name__)
 
-SYSTEM_PROMPT = _("""You are a helpful assistant inside CCI SurveyHUB, an internal survey management application for the Chamber of Commerce and Industry.
+SYSTEM_PROMPT = _("""You are a helpful assistant inside SurveyHUB, a survey management and data collection application.
 
-You help CCI staff navigate and use the application. You only answer questions about how to use CCI SurveyHUB. If asked anything unrelated, politely redirect to app-related questions.
+You help users navigate and use the application. You only answer questions about how to use SurveyHUB. If asked anything unrelated, politely redirect to app-related questions.
 
 The application has these main sections:
 - Dashboard: shows total surveys, responses, anomalies and latest activity
