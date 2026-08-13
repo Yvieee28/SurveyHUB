@@ -28,32 +28,28 @@
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='css/main.css') }}?v=6"
+        href="{{ url_for('static', filename='css/main.css') }}?v=7"
     >
 
     {% block extra_css %}
     {% endblock %}
 
-
     <style>
 
         /* ================================================================
-           TOAST NOTIFICATIONS
+           TOASTS
            ================================================================ */
 
         .custom-toast-container {
             position: fixed;
             top: 20px;
             right: 20px;
-
             z-index: 30000;
 
             display: flex;
             flex-direction: column;
-
             gap: 10px;
         }
-
 
         .custom-toast {
             background: #ffffff;
@@ -67,7 +63,6 @@
 
             display: flex;
             align-items: center;
-
             gap: 10px;
 
             min-width: 280px;
@@ -76,48 +71,35 @@
             font-size: 13px;
             font-weight: 500;
 
+            border-left: 4px solid;
+
             animation:
                 slideInToast 0.4s ease-out;
-
-            border-left: 4px solid;
         }
-
 
         .custom-toast.danger {
             border-left-color: #ef4444;
-
             background: #fee2e2;
-
             color: #991b1b;
         }
 
-
         .custom-toast.success {
             border-left-color: #10b981;
-
             background: #d1fae5;
-
             color: #065f46;
         }
 
-
         .custom-toast.warning {
             border-left-color: #f59e0b;
-
             background: #fef3c7;
-
             color: #92400e;
         }
 
-
         .custom-toast.info {
             border-left-color: #3b82f6;
-
             background: #dbeafe;
-
             color: #1e40af;
         }
-
 
         .custom-toast-close {
             margin-left: auto;
@@ -128,17 +110,8 @@
 
             font-size: 14px;
 
-            transition:
-                color 0.2s;
-
             touch-action: manipulation;
         }
-
-
-        .custom-toast-close:hover {
-            color: #374151;
-        }
-
 
         @keyframes slideInToast {
 
@@ -154,7 +127,6 @@
 
         }
 
-
         @keyframes fadeOutToast {
 
             from {
@@ -169,7 +141,6 @@
 
         }
 
-
         .custom-toast.hiding {
             animation:
                 fadeOutToast 0.3s ease-in forwards;
@@ -177,7 +148,7 @@
 
 
         /* ================================================================
-           AI CHAT BUTTON
+           CHAT BUTTON
            ================================================================ */
 
         .ai-chat-button {
@@ -192,21 +163,20 @@
             border-radius: 50%;
 
             background: #3b82f6;
-
-            color: #ffffff;
+            color: white;
 
             border: none;
 
             cursor: pointer;
-
-            box-shadow:
-                0 4px 12px rgba(59, 130, 246, 0.3);
 
             display: flex;
             align-items: center;
             justify-content: center;
 
             font-size: 24px;
+
+            box-shadow:
+                0 4px 12px rgba(59, 130, 246, 0.3);
 
             z-index: 20000;
 
@@ -218,13 +188,10 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-
         .ai-chat-button:hover {
             background: #2563eb;
-
             transform: scale(1.05);
         }
-
 
         .ai-chat-button:active {
             transform: scale(0.96);
@@ -232,7 +199,7 @@
 
 
         /* ================================================================
-           AI CHAT PANEL
+           CHAT PANEL
            ================================================================ */
 
         .ai-chat-panel {
@@ -247,7 +214,7 @@
             height: 500px;
             max-height: calc(100vh - 130px);
 
-            background: #ffffff;
+            background: white;
 
             border-radius: 12px;
 
@@ -255,14 +222,12 @@
                 0 8px 24px rgba(0, 0, 0, 0.15);
 
             display: none;
-
             flex-direction: column;
 
-            z-index: 19999;
-
             overflow: hidden;
-        }
 
+            z-index: 19999;
+        }
 
         .ai-chat-panel.active {
             display: flex !important;
@@ -271,21 +236,16 @@
                 slideUp 0.3s ease;
         }
 
-
         @keyframes slideUp {
 
             from {
                 opacity: 0;
-
-                transform:
-                    translateY(20px);
+                transform: translateY(20px);
             }
 
             to {
                 opacity: 1;
-
-                transform:
-                    translateY(0);
+                transform: translateY(0);
             }
 
         }
@@ -297,8 +257,7 @@
 
         .ai-chat-header {
             background: #3b82f6;
-
-            color: #ffffff;
+            color: white;
 
             padding: 16px;
 
@@ -309,7 +268,6 @@
             flex-shrink: 0;
         }
 
-
         .ai-chat-header h3 {
             margin: 0;
 
@@ -318,32 +276,28 @@
 
             display: flex;
             align-items: center;
-
             gap: 6px;
         }
-
 
         .ai-chat-close {
             background: none;
 
             border: none;
 
-            color: #ffffff;
+            color: white;
 
             cursor: pointer;
 
-            font-size: 20px;
-
-            padding: 0;
-
             width: 32px;
             height: 32px;
+
+            padding: 0;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            flex-shrink: 0;
+            font-size: 20px;
 
             touch-action: manipulation;
 
@@ -371,10 +325,7 @@
             gap: 12px;
 
             -webkit-overflow-scrolling: touch;
-
-            overscroll-behavior: contain;
         }
-
 
         .ai-message,
         .user-message {
@@ -388,13 +339,10 @@
 
             line-height: 1.5;
 
-            word-wrap: break-word;
-
             overflow-wrap: anywhere;
 
-            white-space: normal;
+            word-wrap: break-word;
         }
-
 
         .ai-message {
             background: #f1f5f9;
@@ -406,17 +354,15 @@
             border-bottom-left-radius: 4px;
         }
 
-
         .user-message {
             background: #3b82f6;
 
-            color: #ffffff;
+            color: white;
 
             align-self: flex-end;
 
             border-bottom-right-radius: 4px;
         }
-
 
         .ai-message ul,
         .ai-message ol {
@@ -425,16 +371,13 @@
             padding-left: 20px;
         }
 
-
         .ai-message li {
             margin: 2px 0;
         }
 
-
         .ai-message strong {
             font-weight: 600;
         }
-
 
         .ai-message code {
             background: #e2e8f0;
@@ -446,16 +389,13 @@
             font-size: 13px;
         }
 
-
         .ai-message p {
             margin: 4px 0;
         }
 
-
         .ai-message p:first-child {
             margin-top: 0;
         }
-
 
         .ai-message p:last-child {
             margin-bottom: 0;
@@ -472,9 +412,9 @@
             border-top:
                 1px solid #e2e8f0;
 
-            background: #ffffff;
-
             padding: 12px;
+
+            background: white;
 
             display: flex;
             align-items: center;
@@ -483,7 +423,6 @@
 
             flex-shrink: 0;
         }
-
 
         .ai-chat-input {
             flex: 1;
@@ -501,23 +440,21 @@
 
             font-size: 14px;
 
-            outline: none;
-
-            background: #ffffff;
+            background: white;
 
             color: #1e293b;
-        }
 
+            outline: none;
+        }
 
         .ai-chat-input:focus {
             border-color: #3b82f6;
         }
 
-
         .ai-chat-send {
             background: #3b82f6;
 
-            color: #ffffff;
+            color: white;
 
             border: none;
 
@@ -537,16 +474,9 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-
         .ai-chat-send:hover {
             background: #2563eb;
         }
-
-
-        .ai-chat-send:active {
-            transform: scale(0.97);
-        }
-
 
         .ai-chat-send:disabled {
             background: #94a3b8;
@@ -579,10 +509,7 @@
 
                 left: 10px;
                 right: 10px;
-
-                width: auto;
             }
-
 
             .custom-toast {
                 width: 100%;
@@ -608,9 +535,9 @@
 
                 font-size: 22px;
 
-                z-index: 20000 !important;
-
                 pointer-events: auto !important;
+
+                z-index: 20000 !important;
             }
 
 
@@ -645,57 +572,43 @@
 
                 border-radius: 14px;
 
-                z-index: 19999 !important;
-
                 overflow: hidden;
 
                 pointer-events: auto;
-            }
 
+                z-index: 19999 !important;
+            }
 
             .ai-chat-panel.active {
                 display: flex !important;
             }
 
-
             .ai-chat-header {
                 padding: 13px 14px;
             }
 
-
             .ai-chat-header h3 {
                 font-size: 15px;
             }
-
 
             .ai-chat-messages {
                 flex: 1;
 
                 min-height: 0;
 
-                padding: 12px;
-
                 overflow-y: auto !important;
 
-                -webkit-overflow-scrolling: touch;
+                padding: 12px;
             }
-
 
             .ai-message,
             .user-message {
                 max-width: 90%;
 
                 font-size: 13px;
-
-                padding: 9px 12px;
             }
 
-
             .ai-chat-input-container {
-                width: 100%;
-
-                display: flex;
-
                 padding:
                     10px
                     10px
@@ -704,32 +617,18 @@
                         env(safe-area-inset-bottom)
                     )
                     10px;
-
-                gap: 8px;
             }
 
-
             .ai-chat-input {
-                flex: 1;
-
                 min-width: 0;
 
                 width: 100%;
 
-                /*
-                   16px prevents iPhone browsers
-                   from zooming automatically.
-                */
                 font-size: 16px;
             }
 
-
             .ai-chat-send {
-                flex-shrink: 0;
-
                 padding: 9px 13px;
-
-                font-size: 14px;
             }
 
         }
@@ -753,7 +652,6 @@
                         env(safe-area-inset-bottom)
                     ) !important;
             }
-
 
             .ai-chat-panel {
                 left: 6px !important;
@@ -779,21 +677,17 @@
                 border-radius: 12px;
             }
 
-
             .ai-chat-header {
                 padding: 11px 12px;
             }
-
 
             .ai-chat-header h3 {
                 font-size: 14px;
             }
 
-
             .ai-chat-messages {
                 padding: 10px;
             }
-
 
             .ai-message,
             .user-message {
@@ -802,8 +696,9 @@
                 font-size: 13px;
             }
 
-
             .ai-chat-input-container {
+                gap: 6px;
+
                 padding:
                     8px
                     8px
@@ -812,10 +707,7 @@
                         env(safe-area-inset-bottom)
                     )
                     8px;
-
-                gap: 6px;
             }
-
 
             .ai-chat-send {
                 padding: 9px 11px;
@@ -834,15 +726,13 @@
 
 
     <!-- ================================================================
-         APPLICATION LAYOUT
+         APP
          ================================================================ -->
 
     <div class="app-layout-wrapper">
 
 
-        <!-- ============================================================
-             SIDEBAR
-             ============================================================ -->
+        <!-- SIDEBAR -->
 
         <nav id="sidebar-panel">
 
@@ -862,7 +752,6 @@
                         SurveyHUB
                     </span>
 
-
                     <span class="brand-subtitle">
                         SURVEY PLATFORM
                     </span>
@@ -871,8 +760,6 @@
 
             </div>
 
-
-            <!-- Navigation -->
 
             <div class="sidebar-menu-links">
 
@@ -927,8 +814,6 @@
 
             </div>
 
-
-            <!-- User Profile -->
 
             <div class="sidebar-footer-profile">
 
@@ -1023,9 +908,7 @@
         </nav>
 
 
-        <!-- ============================================================
-             MAIN CONTENT
-             ============================================================ -->
+        <!-- MAIN CONTENT -->
 
         <div id="main-content-workspace">
 
@@ -1044,28 +927,16 @@
     </div>
 
 
-    <!-- ================================================================
-         LOADING SPINNER
-         ================================================================ -->
-
     {% include "components/_spinner.html" %}
 
-
-    <!-- ================================================================
-         BOOTSTRAP
-         ================================================================ -->
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
     </script>
 
 
-    <!-- ================================================================
-         APPLICATION JS
-         ================================================================ -->
-
     <script
-        src="{{ url_for('static', filename='js/main.js') }}?v=6">
+        src="{{ url_for('static', filename='js/main.js') }}?v=7">
     </script>
 
 
@@ -1101,7 +972,7 @@
                                 }
 
                                 {% if not loop.last %}
-                                    ,
+                                ,
                                 {% endif %}
 
                             {% endfor %}
@@ -1165,17 +1036,9 @@
                             'bi-info-circle-fill'
                         }"></i>
 
-                        <span>
-                            ${message}
-                        </span>
+                        <span>${message}</span>
 
-                        <i
-                            class="
-                                bi
-                                bi-x-lg
-                                custom-toast-close
-                            "
-                        ></i>
+                        <i class="bi bi-x-lg custom-toast-close"></i>
 
                     `;
 
@@ -1190,6 +1053,7 @@
                         'click',
                         function () {
 
+
                             toast.classList.add(
                                 'hiding'
                             );
@@ -1201,6 +1065,7 @@
                                 },
                                 300
                             );
+
 
                         }
                     );
@@ -1214,6 +1079,7 @@
                     setTimeout(
                         function () {
 
+
                             toast.classList.add(
                                 'hiding'
                             );
@@ -1226,9 +1092,11 @@
                                 300
                             );
 
+
                         },
                         4000
                     );
+
 
                 }
 
@@ -1236,10 +1104,12 @@
                 flashMessages.forEach(
                     function (flash) {
 
+
                         showToast(
                             flash.category,
                             flash.message
                         );
+
 
                     }
                 );
@@ -1262,7 +1132,7 @@
                             .textContent =
                                 title
                                 ||
-                                '{{ _("Confirm Action") }}';
+                                {{ _("Confirm Action")|tojson }};
 
 
                         document
@@ -1272,7 +1142,7 @@
                             .textContent =
                                 message
                                 ||
-                                '{{ _("Are you sure?") }}';
+                                {{ _("Are you sure?")|tojson }};
 
 
                         const actionBtn =
@@ -1284,7 +1154,7 @@
                         actionBtn.textContent =
                             buttonText
                             ||
-                            '{{ _("Confirm") }}';
+                            {{ _("Confirm")|tojson }};
 
 
                         actionBtn.className =
@@ -1313,6 +1183,7 @@
                                     )
                                     .hide();
 
+
                             };
 
 
@@ -1323,6 +1194,7 @@
                             )
 
                         ).show();
+
 
                     };
 
@@ -1345,12 +1217,7 @@
     >
 
 
-        <div
-            class="
-                modal-dialog
-                modal-dialog-centered
-            "
-        >
+        <div class="modal-dialog modal-dialog-centered">
 
 
             <div class="modal-content">
@@ -1386,9 +1253,7 @@
                     id="confirmModalBody"
                 >
 
-                    {{
-                        _('Are you sure you want to proceed?')
-                    }}
+                    {{ _('Are you sure you want to proceed?') }}
 
                 </div>
 
@@ -1430,9 +1295,7 @@
     </div>
 
 
-    <!-- ================================================================
-         TOAST CONTAINER
-         ================================================================ -->
+    <!-- TOAST CONTAINER -->
 
     <div
         class="custom-toast-container"
@@ -1442,7 +1305,7 @@
 
 
     <!-- ================================================================
-         MARKED JS
+         AI CHAT
          ================================================================ -->
 
     <script
@@ -1450,16 +1313,11 @@
     </script>
 
 
-    <!-- ================================================================
-         CHAT BUTTON
-         ================================================================ -->
-
     <button
         type="button"
         class="ai-chat-button"
         id="aiChatButton"
         title="{{ _('AI Assistant') }}"
-        aria-label="{{ _('Open AI Assistant') }}"
     >
 
         <i class="bi bi-chat-dots-fill"></i>
@@ -1467,15 +1325,9 @@
     </button>
 
 
-    <!-- ================================================================
-         CHAT PANEL
-         ================================================================ -->
-
     <div
         class="ai-chat-panel"
         id="aiChatPanel"
-        role="dialog"
-        aria-label="{{ _('AI Assistant') }}"
     >
 
 
@@ -1495,7 +1347,6 @@
                 type="button"
                 class="ai-chat-close"
                 id="aiChatClose"
-                aria-label="{{ _('Close') }}"
             >
 
                 <i class="bi bi-x-lg"></i>
@@ -1556,7 +1407,7 @@
 
 
     <!-- ================================================================
-         CHAT SCRIPT
+         AI CHAT SCRIPT
          ================================================================ -->
 
     <script>
@@ -1604,56 +1455,66 @@
 
                 function openChatPanel() {
 
+
                     chatPanel.classList.add(
                         'active'
-                    );
-
-
-                    document.body.classList.add(
-                        'chat-open'
                     );
 
 
                     setTimeout(
                         function () {
 
-                            input.focus();
+
+                            if (
+                                window.innerWidth > 768
+                            ) {
+
+
+                                input.focus();
+
+
+                            }
+
 
                         },
                         150
                     );
+
 
                 }
 
 
                 function closeChatPanel() {
 
+
                     chatPanel.classList.remove(
                         'active'
                     );
 
-
-                    document.body.classList.remove(
-                        'chat-open'
-                    );
 
                 }
 
 
                 function toggleChatPanel() {
 
+
                     if (
                         chatPanel.classList
                             .contains('active')
                     ) {
 
+
                         closeChatPanel();
+
 
                     } else {
 
+
                         openChatPanel();
 
+
                     }
+
 
                 }
 
@@ -1662,11 +1523,13 @@
                     'click',
                     function (event) {
 
+
                         event.preventDefault();
 
                         event.stopPropagation();
 
                         toggleChatPanel();
+
 
                     }
                 );
@@ -1676,49 +1539,14 @@
                     'click',
                     function (event) {
 
+
                         event.preventDefault();
 
                         event.stopPropagation();
 
                         closeChatPanel();
 
-                    }
-                );
 
-
-                /*
-                 * Touch support.
-                 * Useful on phones where click can
-                 * occasionally be swallowed by
-                 * overlapping elements.
-                 */
-
-                chatButton.addEventListener(
-                    'touchend',
-                    function (event) {
-
-                        event.preventDefault();
-
-                        toggleChatPanel();
-
-                    },
-                    {
-                        passive: false
-                    }
-                );
-
-
-                closeButton.addEventListener(
-                    'touchend',
-                    function (event) {
-
-                        event.preventDefault();
-
-                        closeChatPanel();
-
-                    },
-                    {
-                        passive: false
                     }
                 );
 
@@ -1727,17 +1555,22 @@
                     'keydown',
                     function (event) {
 
+
                         if (
                             event.key === 'Enter'
                             &&
                             !event.shiftKey
                         ) {
 
+
                             event.preventDefault();
+
 
                             sendMessage();
 
+
                         }
+
 
                     }
                 );
@@ -1747,9 +1580,12 @@
                     'click',
                     function (event) {
 
+
                         event.preventDefault();
 
+
                         sendMessage();
+
 
                     }
                 );
@@ -1803,8 +1639,13 @@
                         'ai-message';
 
 
+                    /*
+                     * Important :
+                     * tojson protège les apostrophes
+                     * et caractères français.
+                     */
                     loadingMsg.textContent =
-                        '{{ _("Thinking...") }}';
+                        {{ _("Thinking...")|tojson }};
 
 
                     messages.appendChild(
@@ -1863,15 +1704,17 @@
                             'ai-message';
 
 
+                        const fallbackMessage =
+                            {{ _("Sorry, I could not process your request.")|tojson }};
+
+
                         aiMsg.innerHTML =
                             marked.parse(
-
                                 data.response
                                 ||
                                 data.error
                                 ||
-                                '{{ _("Sorry, I could not process your request.") }}'
-
+                                fallbackMessage
                             );
 
 
@@ -1903,7 +1746,7 @@
 
 
                         errorMsg.textContent =
-                            '{{ _("Sorry, an error occurred. Please try again.") }}';
+                            {{ _("Sorry, an error occurred. Please try again.")|tojson }};
 
 
                         messages.appendChild(
@@ -1922,18 +1765,13 @@
                             messages.scrollHeight;
 
 
-                        /*
-                         * On desktop we refocus
-                         * automatically.
-                         * On mobile we avoid forcing
-                         * the keyboard to reopen.
-                         */
-
                         if (
                             window.innerWidth > 768
                         ) {
 
+
                             input.focus();
+
 
                         }
 
@@ -1944,33 +1782,23 @@
                 }
 
 
-                /*
-                 * Keep the panel visible if the
-                 * device rotates.
-                 */
-
                 window.addEventListener(
                     'orientationchange',
                     function () {
 
+
                         setTimeout(
                             function () {
 
-                                if (
-                                    chatPanel.classList
-                                        .contains(
-                                            'active'
-                                        )
-                                ) {
 
-                                    messages.scrollTop =
-                                        messages.scrollHeight;
+                                messages.scrollTop =
+                                    messages.scrollHeight;
 
-                                }
 
                             },
                             250
                         );
+
 
                     }
                 );
