@@ -1,8 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from flask_login import login_required
 from flask_babel import _
 from google import genai
-from google.genai import types
 import os
 from dotenv import load_dotenv
 
@@ -10,7 +9,9 @@ load_dotenv()
 
 assistant = Blueprint('assistant', __name__)
 
-SYSTEM_PROMPT = _("""You are a helpful assistant inside SurveyHUB, a survey management and data collection application.
+
+BASE_SYSTEM_PROMPT = """
+You are a helpful assistant inside SurveyHUB, a survey management and data collection application.
 
 You help users navigate and use the application. You only answer questions about how to use SurveyHUB. If asked anything unrelated, politely redirect to app-related questions.
 
@@ -30,30 +31,74 @@ Common tasks you can help with:
 - How to mark an anomaly as resolved: Go to Anomalies → click "Resolve" on any open anomaly
 - How to export data: From results page, click "Export CSV" or "Export Excel" buttons
 
-Keep responses concise and actionable. Use bullet points for steps.""")
+Keep responses concise and actionable. Use bullet points for steps.
+"""
+
 
 @assistant.route('/assistant/ask', methods=['POST'])
 @login_required
 def ask_assistant():
-    data = request.get_json()
+
+    data = request.get_json() or {}
+
     message = data.get('message', '').strip()
-    
+
     if not message:
-        return jsonify({'error': _('Message is required')}), 400
-    
+        return jsonify({
+            'error': _('Message is required')
+        }), 400
+
     try:
+
         api_key = os.getenv('GEMINI_API_KEY')
+
         if not api_key:
-            return jsonify({'error': _('API key not configured')}), 500
-        
-        client = genai.Client(api_key=api_key)
-        
+            return jsonify({
+                'error': _('API key not configured')
+            }), 500
+
+        language = session.get('language', 'fr')
+
+        if language == 'fr':
+            language_instruction = """
+Important language instruction:
+Always answer the user in French.
+Even if the system instructions are written in English, your final answer must be in French.
+Use clear and natural French.
+"""
+        else:
+            language_instruction = """
+Important language instruction:
+Always answer the user in English.
+Use clear and natural English.
+"""
+
+        full_prompt = (
+            BASE_SYSTEM_PROMPT
+            + "\n\n"
+            + language_instruction
+            + "\n\nUser question: "
+            + message
+        )
+
+        client = genai.Client(
+            api_key=api_key
+        )
+
         response = client.models.generate_content(
             model='gemini-2.5-flash',
-            contents=SYSTEM_PROMPT + '\n\nUser question: ' + message
+            contents=full_prompt
         )
-        
-        return jsonify({'response': response.text})
-    
+
+        return jsonify({
+            'response': response.text
+        })
+
     except Exception as e:
-        return jsonify({'error': _('Assistant error: %(error)s', error=str(e))}), 500
+
+        return jsonify({
+            'error': _(
+                'Assistant error: %(error)s',
+                error=str(e)
+            )
+        }), 500
